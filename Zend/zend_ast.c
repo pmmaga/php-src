@@ -1266,6 +1266,8 @@ simple_list:
 			FUNC_OP("unset");
 		case ZEND_AST_RETURN:
 			APPEND_NODE_1("return");
+		case ZEND_AST_DEFER:
+			APPEND_NODE_1("defer");
 		case ZEND_AST_LABEL:
 			zend_ast_export_name(str, ast->child[0], 0, indent);
 			smart_str_appendc(str, ':');
