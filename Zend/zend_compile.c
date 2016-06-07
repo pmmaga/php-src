@@ -4095,6 +4095,12 @@ void zend_compile_return(zend_ast *ast) /* {{{ */
 }
 /* }}} */
 
+void zend_compile_defer(zend_ast *ast) /* {{{ */
+{
+	zend_error_noreturn(E_COMPILE_ERROR, "Not implemented yet.");
+}
+/* }}} */
+
 void zend_compile_echo(zend_ast *ast) /* {{{ */
 {
 	zend_op *opline;
@@ -7631,6 +7637,9 @@ void zend_compile_stmt(zend_ast *ast) /* {{{ */
 			break;
 		case ZEND_AST_RETURN:
 			zend_compile_return(ast);
+			break;
+		case ZEND_AST_DEFER:
+			zend_compile_defer(ast);
 			break;
 		case ZEND_AST_ECHO:
 			zend_compile_echo(ast);
