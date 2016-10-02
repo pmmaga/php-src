@@ -567,7 +567,11 @@ static void do_inheritance_check_on_method(zend_function *child, zend_function *
 	}
 
 	if (UNEXPECTED(parent_flags & ZEND_ACC_FINAL)) {
-		zend_error_noreturn(E_COMPILE_ERROR, "Cannot override final method %s::%s()", ZEND_FN_SCOPE_NAME(parent), ZSTR_VAL(child->common.function_name));
+		if (UNEXPECTED(parent_flags & ZEND_ACC_PRIVATE)) {
+			zend_error_noreturn(E_COMPILE_ERROR, "Cannot use the same method name as the final private method %s::%s()", ZEND_FN_SCOPE_NAME(parent), ZSTR_VAL(child->common.function_name));
+		} else {
+			zend_error_noreturn(E_COMPILE_ERROR, "Cannot override final method %s::%s()", ZEND_FN_SCOPE_NAME(parent), ZSTR_VAL(child->common.function_name));
+		}
 	}
 
 	child_flags	= child->common.fn_flags;
