@@ -566,7 +566,7 @@ static void do_inheritance_check_on_method(zend_function *child, zend_function *
 			child->common.prototype ? ZSTR_VAL(child->common.prototype->common.scope->name) : ZSTR_VAL(child->common.scope->name));
 	}
 
-	if (UNEXPECTED(parent_flags & ZEND_ACC_FINAL)) {
+	if (UNEXPECTED(parent_flags & ZEND_ACC_FINAL) && !(parent_flags & ZEND_ACC_PRIVATE)) {
 		zend_error_noreturn(E_COMPILE_ERROR, "Cannot override final method %s::%s()", ZEND_FN_SCOPE_NAME(parent), ZSTR_VAL(child->common.function_name));
 	}
 

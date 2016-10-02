@@ -827,6 +827,9 @@ uint32_t zend_add_member_modifier(uint32_t flags, uint32_t new_flag) /* {{{ */
 	if ((new_flags & ZEND_ACC_ABSTRACT) && (new_flags & ZEND_ACC_FINAL)) {
 		zend_error_noreturn(E_COMPILE_ERROR, "Cannot use the final modifier on an abstract class member");
 	}
+	if ((new_flags & ZEND_ACC_PRIVATE) && (new_flags & ZEND_ACC_FINAL)) {
+		zend_error(E_COMPILE_WARNING, "Private methods are inherently final as they cannot be overriden");
+	}
 	return new_flags;
 }
 /* }}} */
