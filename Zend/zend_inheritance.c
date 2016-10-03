@@ -583,17 +583,11 @@ static void do_inheritance_check_on_method(zend_function *child, zend_function *
 		zend_error_noreturn(E_COMPILE_ERROR, "Access level to %s::%s() must be %s (as in class %s)%s", ZEND_FN_SCOPE_NAME(child), ZSTR_VAL(child->common.function_name), zend_visibility_string(parent_flags), ZEND_FN_SCOPE_NAME(parent), (parent_flags&ZEND_ACC_PUBLIC) ? "" : " or weaker");
 	}
 
-	if (((child_flags & ZEND_ACC_PPP_MASK) < (parent_flags & ZEND_ACC_PPP_MASK))
-		&& ((parent_flags & ZEND_ACC_PPP_MASK) & ZEND_ACC_PRIVATE)) {
-		child->common.fn_flags |= ZEND_ACC_CHANGED;
-	}
 	if (parent_flags & ZEND_ACC_CHANGED) {
 		child->common.fn_flags |= ZEND_ACC_CHANGED;
 	}
 
-	if (parent_flags & ZEND_ACC_PRIVATE) {
-		child->common.prototype = NULL;
-	} else if (parent_flags & ZEND_ACC_ABSTRACT) {
+	if (parent_flags & ZEND_ACC_ABSTRACT) {
 		child->common.fn_flags |= ZEND_ACC_IMPLEMENTED_ABSTRACT;
 		child->common.prototype = parent;
 	} else if (!(parent->common.fn_flags & ZEND_ACC_CTOR) || (parent->common.prototype && (parent->common.prototype->common.scope->ce_flags & ZEND_ACC_INTERFACE))) {
@@ -641,7 +635,14 @@ static zend_function *do_inherit_method(zend_string *key, zend_function *parent,
 		zend_function *func = (zend_function*)Z_PTR_P(child);
 		zend_function *orig_prototype = func->common.prototype;
 
-		do_inheritance_check_on_method(func, parent);
+		if (UNEXPECTED(parent->common.fn_flags & ZEND_ACC_PRIVATE)) {
+			func->common.prototype = NULL;
+    		if ((func->common.fn_flags & ZEND_ACC_PPP_MASK) < (parent->common.fn_flags & ZEND_ACC_PPP_MASK)) {
+				func->common.fn_flags |= ZEND_ACC_CHANGED;
+			}
+		} else {
+			do_inheritance_check_on_method(func, parent);
+		}
 		if (func->common.prototype != orig_prototype &&
 		    func->type == ZEND_USER_FUNCTION &&
 		    func->common.scope != ce &&
