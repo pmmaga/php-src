@@ -29,7 +29,7 @@ unset ($unset_var);
 class classA
 {
   public function __toString() {
-    return b"Class A object";
+    return "Class A object";
   }
 }
 
@@ -72,8 +72,8 @@ $inputs = array(
        '',
 
        // string data
-/*18*/ b"string",
-       b'string',
+/*18*/ "string",
+       'string',
        $heredoc,
        
        // object data

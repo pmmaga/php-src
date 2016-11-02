@@ -14,7 +14,7 @@ $fname2 = dirname(__FILE__) . '/' . basename(__FILE__, '.php') . '2.phar';
 
 $phar = new Phar($fname);
 $phar['a.txt'] = 'some text';
-$phar->setMetadata(b'hi');
+$phar->setMetadata('hi');
 $phar->stopBuffering();
 var_dump($phar->isFileFormat(Phar::TAR));
 var_dump(strlen($phar->getStub()));
