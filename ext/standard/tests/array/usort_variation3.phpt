@@ -58,10 +58,6 @@ $array_arg = array(
   // null keys
   NULL => 35,
 
-  // binary key
-  "a".chr(0)."b" => 45,
-  "binary" => 30,
-
   //heredoc keys
   $simple_heredoc => 75,
   $multiline_heredoc => 200,
@@ -80,7 +76,7 @@ var_dump($array_arg);
 bool(true)
 
 -- Sorted array after usort() function call --
-array(15) {
+array(13) {
   [0]=>
   int(200)
   [1]=>

@@ -66,7 +66,7 @@ echo "Done"
 ?>
 --EXPECTF--
 *** Testing array_flip() : different keys for 'input' array argument ***
-array(14) {
+array(12) {
   ["bool_key4"]=>
   int(0)
   ["bool_key3"]=>

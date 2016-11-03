@@ -94,7 +94,7 @@ echo "Done"
 *** Testing uasort() : Sorting array with all possible keys ***
 bool(true)
 -- Sorted array after uasort() function call --
-array(14) {
+array(12) {
   ["multiline heredoc with 123
 and speci@! ch@r..
 check	also"]=>

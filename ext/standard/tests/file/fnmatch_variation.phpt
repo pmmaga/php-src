@@ -251,11 +251,7 @@ bool(true)
 Warning: fnmatch() expects parameter 2 to be a valid path, string given in %s on line %d
 NULL
 bool(false)
-bool(true)
 -- Iteration 1 --
-
-Warning: fnmatch() expects parameter 1 to be a valid path, string given in %s on line %d
-NULL
 
 Warning: fnmatch() expects parameter 1 to be a valid path, string given in %s on line %d
 NULL
@@ -281,11 +277,7 @@ bool(true)
 Warning: fnmatch() expects parameter 2 to be a valid path, string given in %s on line %d
 NULL
 bool(false)
-bool(true)
 -- Iteration 3 --
-
-Warning: fnmatch() expects parameter 1 to be a valid path, string given in %s on line %d
-NULL
 
 Warning: fnmatch() expects parameter 1 to be a valid path, string given in %s on line %d
 NULL
@@ -311,7 +303,6 @@ bool(false)
 Warning: fnmatch() expects parameter 2 to be a valid path, string given in %s on line %d
 NULL
 bool(true)
-bool(false)
 
 --- With booleans ---
 -- Iteration 0 --

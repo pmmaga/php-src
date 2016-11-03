@@ -162,7 +162,7 @@ array(3) {
   string(17) "This is a heredoc"
 }
 
- Iteration: 8
+ Iteration: 8 
 array(1) {
   [0]=>
   NULL

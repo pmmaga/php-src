@@ -103,14 +103,14 @@ bool(true)
 bool(true)
 
 -- Iteration 7 --
-8 : 0 16
-8 : 1 8.345
-8 : 0 Fruits
-8 : 0 1
-8 : 1 
-8 : 0 
-8 : 0 -98
-8 : 1 0.005
-8 : 2 banana
+7 : 0 16
+7 : 1 8.345
+7 : 0 Fruits
+7 : 0 1
+7 : 1 
+7 : 0 
+7 : 0 -98
+7 : 1 0.005
+7 : 2 banana
 bool(true)
 Done
