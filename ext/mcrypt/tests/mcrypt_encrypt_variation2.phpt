@@ -48,7 +48,7 @@ class classWithoutToString
 }
 
 // heredoc string
-$heredoc = b<<<EOT
+$heredoc = <<<EOT
 hello world
 EOT;
 
