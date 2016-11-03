@@ -48,11 +48,8 @@ $input_values = array(
        // empty array
        array(),
 
-       // binary array
-       array(b"binary"),
-
        // mixed array
-/*8*/  array(16, 8.345, "Fruits", true, null, FALSE, -98, 0.005, 'banana')
+/*7*/  array(16, 8.345, "Fruits", true, null, FALSE, -98, 0.005, 'banana')
 );
 
 for($count = 0; $count < count($input_values); $count++) {
@@ -106,10 +103,6 @@ bool(true)
 bool(true)
 
 -- Iteration 7 --
-7 : 0 binary
-bool(true)
-
--- Iteration 8 --
 8 : 0 16
 8 : 1 8.345
 8 : 2 Fruits

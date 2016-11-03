@@ -14,9 +14,9 @@ $file = "<?php __HALT_COMPILER(); ?>";
 
 $files = array();
 // "hi" gzdeflated
-$files['a'] = array('cont'=>b'a','comp'=> (binary)pack('H*', 'cbc80400'),'flags'=>0x00001000, 'ulen' => 1, 'clen' => 4);
+$files['a'] = array('cont'=>'a','comp'=> pack('H*', 'cbc80400'),'flags'=>0x00001000, 'ulen' => 1, 'clen' => 4);
 $files['b'] = $files['a'];
-$files['c'] = array('cont'=>b'*');
+$files['c'] = array('cont'=>'*');
 $files['d'] = $files['a'];
 include 'files/phar_test.inc';
 
