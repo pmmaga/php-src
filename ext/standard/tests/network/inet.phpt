@@ -16,13 +16,13 @@ var_dump(inet_ntop((binary)$packed));
 
 var_dump(inet_ntop());
 var_dump(inet_ntop(-1));
-var_dump(inet_ntop(b""));
-var_dump(inet_ntop(b"blah-blah"));
+var_dump(inet_ntop(""));
+var_dump(inet_ntop("blah-blah"));
 
 var_dump(inet_pton());
-var_dump(inet_pton(b""));
+var_dump(inet_pton(""));
 var_dump(inet_pton(-1));
-var_dump(inet_pton(b"abra"));
+var_dump(inet_pton("abra"));
 
 $array = array(
 	b"127.0.0.1",
