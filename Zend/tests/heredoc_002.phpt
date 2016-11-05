@@ -1,5 +1,5 @@
 --TEST--
-basic binary heredoc syntax
+no longer support binary heredoc syntax
 --FILE--
 <?php
 
@@ -18,6 +18,5 @@ ENDOFHEREDOC;
 print "{$x}";
 
 ?>
---EXPECT--
-This is a heredoc test.
-This is another heredoc test.
+--EXPECTF--
+Parse error: syntax error, unexpected '<<<ENDOFHEREDOC%A' (T_START_HEREDOC) in %s

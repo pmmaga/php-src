@@ -1,5 +1,5 @@
 --TEST--
-basic binary nowdoc syntax
+no longer support basic binary nowdoc syntax
 --FILE--
 <?php
 
@@ -18,6 +18,5 @@ ENDOFNOWDOC;
 print "{$x}";
 
 ?>
---EXPECT--
-This is a nowdoc test.
-This is another nowdoc test.
+--EXPECTF--
+Parse error: syntax error, unexpected '<<<'ENDOFNOWDOC'%A' (T_START_HEREDOC) in %s
