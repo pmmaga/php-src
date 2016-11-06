@@ -34,7 +34,7 @@ echo $e->getMessage() . "\n";
 ?>
 ===DONE===
 --EXPECT--
-string(6683) "<?php
+string(6651) "<?php
 
 $web = 'index.php';
 
@@ -144,7 +144,7 @@ const GZ = 0x1000;
 const BZ2 = 0x2000;
 const MASK = 0x3000;
 const START = 'index.php';
-const LEN = 6685;
+const LEN = 6653;
 
 static function go($return = false)
 {
@@ -328,7 +328,7 @@ Extract_Phar::go();
 __HALT_COMPILER(); ?>"
 ============================================================================
 ============================================================================
-string(6694) "<?php
+string(6662) "<?php
 
 $web = 'index.php';
 
@@ -438,7 +438,7 @@ const GZ = 0x1000;
 const BZ2 = 0x2000;
 const MASK = 0x3000;
 const START = 'my/custom/thingy.php';
-const LEN = 6696;
+const LEN = 6662;
 
 static function go($return = false)
 {
@@ -622,7 +622,7 @@ Extract_Phar::go();
 __HALT_COMPILER(); ?>"
 ============================================================================
 ============================================================================
-int(7074)
+int(7042)
 ============================================================================
 ============================================================================
 Illegal filename passed in for stub creation, was 401 characters long, and only 400 or less is allowed
@@ -630,7 +630,7 @@ Illegal filename passed in for stub creation, was 401 characters long, and only 
 ============================================================================
 ============================================================================
 ============================================================================
-string(6696) "<?php
+string(6664) "<?php
 
 $web = 'the/web.php';
 
@@ -740,7 +740,7 @@ const GZ = 0x1000;
 const BZ2 = 0x2000;
 const MASK = 0x3000;
 const START = 'my/custom/thingy.php';
-const LEN = 6698;
+const LEN = 6666;
 
 static function go($return = false)
 {
@@ -924,6 +924,6 @@ Extract_Phar::go();
 __HALT_COMPILER(); ?>"
 ============================================================================
 ============================================================================
-int(7074)
+int(7042)
 Illegal web filename passed in for stub creation, was 401 characters long, and only 400 or less is allowed
 ===DONE===

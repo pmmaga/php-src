@@ -54,7 +54,7 @@ try {
 unlink(dirname(__FILE__) . '/' . basename(__FILE__, '.clean.php') . '.phar');
 ?>
 --EXPECT--
-string(6685) "<?php
+string(6653) "<?php
 
 $web = 'index.php';
 
@@ -164,7 +164,7 @@ const GZ = 0x1000;
 const BZ2 = 0x2000;
 const MASK = 0x3000;
 const START = 'index.php';
-const LEN = 6685;
+const LEN = 6653;
 
 static function go($return = false)
 {
@@ -349,7 +349,7 @@ __HALT_COMPILER(); ?>
 "
 ============================================================================
 ============================================================================
-string(6696) "<?php
+string(6664) "<?php
 
 $web = 'index.php';
 
@@ -459,7 +459,7 @@ const GZ = 0x1000;
 const BZ2 = 0x2000;
 const MASK = 0x3000;
 const START = 'my/custom/thingy.php';
-const LEN = 6696;
+const LEN = 6664;
 
 static function go($return = false)
 {
@@ -644,7 +644,7 @@ __HALT_COMPILER(); ?>
 "
 ============================================================================
 ============================================================================
-string(6698) "<?php
+string(6666) "<?php
 
 $web = 'the/web.php';
 
@@ -754,7 +754,7 @@ const GZ = 0x1000;
 const BZ2 = 0x2000;
 const MASK = 0x3000;
 const START = 'my/custom/thingy.php';
-const LEN = 6698;
+const LEN = 6666;
 
 static function go($return = false)
 {
