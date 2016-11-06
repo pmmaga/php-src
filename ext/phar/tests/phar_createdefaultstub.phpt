@@ -438,7 +438,7 @@ const GZ = 0x1000;
 const BZ2 = 0x2000;
 const MASK = 0x3000;
 const START = 'my/custom/thingy.php';
-const LEN = 6662;
+const LEN = 6664;
 
 static function go($return = false)
 {

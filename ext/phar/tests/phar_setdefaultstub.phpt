@@ -939,6 +939,6 @@ __HALT_COMPILER(); ?>
 "
 ============================================================================
 ============================================================================
-int(7076)
+int(7044)
 Illegal filename passed in for stub creation, was 401 characters long, and only 400 or less is allowed
 ===DONE===
