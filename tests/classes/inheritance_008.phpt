@@ -40,7 +40,10 @@ $a->notOverriden_callYourPrivates();
 $b = new B();
 $b->callYourPrivates();
 $b->notOverriden_callYourPrivates();
---EXPECT--
+--EXPECTF--
+Warning: Private methods are inherently final as they are not seen by other classes %s
+
+Warning: Private methods are inherently final as they are not seen by other classes %s
 A::normalPrivate
 A::finalPrivate
 A::normalPrivate

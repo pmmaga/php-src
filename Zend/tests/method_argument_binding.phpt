@@ -41,6 +41,7 @@ class E extends D {
 
 ?>
 --EXPECTF--
+Warning: Private methods are inherently final as they are not seen by other classes %s
 int(2)
 
 Notice: Undefined variable: x in %s on line %d
