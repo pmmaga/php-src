@@ -299,13 +299,8 @@ char *alloca();
 # endif
 #endif /* ZEND_DEBUG */
 
-#if PHP_HAVE_BUILTIN_EXPECT
-# define EXPECTED(condition)   __builtin_expect(!!(condition), 1)
-# define UNEXPECTED(condition) __builtin_expect(!!(condition), 0)
-#else
 # define EXPECTED(condition)   (condition)
 # define UNEXPECTED(condition) (condition)
-#endif
 
 #ifndef XtOffsetOf
 # if defined(CRAY) || (defined(__ARMCC_VERSION) && !defined(LINUX))
