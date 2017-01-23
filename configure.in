@@ -203,6 +203,7 @@ rm -f libs/*
 dnl Checks for programs.
 dnl -------------------------------------------------------------------------
 
+test ${CFLAGS+set} = set || CFLAGS=-O2
 AC_PROG_CC([cc gcc])
 PHP_DETECT_ICC
 PHP_DETECT_SUNCC
