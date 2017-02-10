@@ -1,21 +1,7 @@
 node() {
-    def shortCommit;
-    
-    stage('Checkout') {
-        checkout(
-            [
-                $class: 'GitSCM', 
-                branches: [[name: BRANCH]], 
-                doGenerateSubmoduleConfigurations: false, 
-                extensions: [[$class: 'WipeWorkspace']], 
-                submoduleCfg: [], 
-                userRemoteConfigs: [[url: 'https://github.com/php/php-src.git']]
-            ]
-        );
-        sh 'git rev-parse HEAD > GIT_COMMIT'
-        shortCommit = readFile('GIT_COMMIT').take(6)
-    }
-    
+    sh('git rev-parse HEAD > GIT_COMMIT');
+    def shortCommit = readFile('GIT_COMMIT').take(6);
+
     stage('Configure') {
         sh('./buildconf --force');
         def debugConfigure = '--enable-debug';
@@ -28,12 +14,12 @@ node() {
         }
         sh("./configure --prefix=${WORKSPACE}/php-install ${debugConfigure} ${ztsConfigure}");
     }
-    
+
     stage('Build') {
         sh('make -j2');
         sh('make install');
     }
-    
+
     stage('Save Artifact') {
         def debugZipName = 'DEBUG';
         if(DEBUG != 'true') {
@@ -43,6 +29,6 @@ node() {
         if(MAINTAINERZTS != 'true') {
             ztsZipName = 'NTS';
         }
-        zip([zipFile:"php-${BRANCH}-${shortCommit}-${debugZipName}-${ztsZipName}.zip", dir:'php-install', archive: true]);
+        zip([zipFile:"php-${BRANCH_NAME}-${shortCommit}-${debugZipName}-${ztsZipName}.zip", dir:'php-install', archive: true]);
     }
 }
