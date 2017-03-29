@@ -2448,7 +2448,9 @@ static inline zend_bool zend_is_const_default_class_ref(zend_ast *name_ast) /* {
 
 static inline void zend_handle_numeric_op(znode *node) /* {{{ */
 {
-	if (node->op_type == IS_CONST && Z_TYPE(node->u.constant) == IS_STRING) {
+	if (node->op_type == IS_CONST &&
+		Z_TYPE(node->u.constant) == IS_STRING &&
+		!(CG(active_op_array)->fn_flags & ZEND_ACC_STRICT_TYPES)) {
 		zend_ulong index;
 
 		if (ZEND_HANDLE_NUMERIC(Z_STR(node->u.constant), index)) {

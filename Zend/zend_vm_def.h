@@ -5069,7 +5069,7 @@ ZEND_VM_C_LABEL(add_again):
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if (OP2_TYPE != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval)) {
+				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
 					ZEND_VM_C_GOTO(num_index);
 				}
 			}
