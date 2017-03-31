@@ -6602,7 +6602,12 @@ static zend_bool zend_try_ct_eval_array(zval *result, zend_ast *ast) /* {{{ */
 					zend_hash_index_update(Z_ARRVAL_P(result), Z_LVAL_P(key), value);
 					break;
 				case IS_STRING:
-					zend_symtable_update(Z_ARRVAL_P(result), Z_STR_P(key), value);
+					if (CG(active_op_array)->fn_flags & ZEND_ACC_STRICT_TYPES) {
+						zend_hash_update(Z_ARRVAL_P(result), Z_STR_P(key), value);
+					}
+					else {
+						zend_symtable_update(Z_ARRVAL_P(result), Z_STR_P(key), value);						
+					}
 					break;
 				case IS_DOUBLE:
 					zend_hash_index_update(Z_ARRVAL_P(result),
