@@ -5842,7 +5842,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if (IS_CONST != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -7523,7 +7523,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if (IS_UNUSED != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -9597,7 +9597,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if (IS_CV != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -11535,7 +11535,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if ((IS_TMP_VAR|IS_VAR) != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -13552,7 +13552,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if (IS_CONST != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -14247,7 +14247,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if (IS_UNUSED != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -14783,7 +14783,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if (IS_CV != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -15315,7 +15315,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if ((IS_TMP_VAR|IS_VAR) != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -19534,7 +19534,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if (IS_CONST != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -21262,7 +21262,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if (IS_UNUSED != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -23736,7 +23736,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if (IS_CV != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -26152,7 +26152,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if ((IS_TMP_VAR|IS_VAR) != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -37441,7 +37441,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if (IS_CONST != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -40046,7 +40046,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if (IS_UNUSED != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -43721,7 +43721,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if (IS_CV != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
@@ -47273,7 +47273,7 @@ add_again:
 		if (EXPECTED(Z_TYPE_P(offset) == IS_STRING)) {
 			str = Z_STR_P(offset);
 			if ((IS_TMP_VAR|IS_VAR) != IS_CONST) {
-				if (ZEND_HANDLE_NUMERIC(str, hval) && !EX_USES_STRICT_TYPES()) {
+				if (!EX_USES_STRICT_TYPES() && ZEND_HANDLE_NUMERIC(str, hval)) {
 					goto num_index;
 				}
 			}
