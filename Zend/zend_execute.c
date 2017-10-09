@@ -854,9 +854,19 @@ static zend_always_inline int zend_verify_arg_type(zend_function *zf, uint32_t a
 			} else if (cur_arg_info->type_hint == _IS_BOOL &&
 			           EXPECTED(Z_TYPE_P(arg) == IS_FALSE || Z_TYPE_P(arg) == IS_TRUE)) {
 				/* pass */
-			} else if (UNEXPECTED(!zend_verify_scalar_type_hint(cur_arg_info->type_hint, arg, ZEND_ARG_USES_STRICT_TYPES()))) {
-				zend_verify_arg_error(zf, arg_num, "be of the type ", zend_get_type_by_const(cur_arg_info->type_hint), zend_zval_type_name(arg), "", arg);
-				return 0;
+			} else {
+				zend_execute_data *caller_execute_data = EG(current_execute_data)->prev_execute_data;
+
+				while (caller_execute_data && 
+					   caller_execute_data->func && 
+					   !ZEND_USER_CODE(caller_execute_data->func->type)) {
+					caller_execute_data = caller_execute_data->prev_execute_data;
+				}
+
+				if (UNEXPECTED(!zend_verify_scalar_type_hint(cur_arg_info->type_hint, arg, ((caller_execute_data->func->common.fn_flags & ZEND_ACC_STRICT_TYPES) != 0)))) {
+					zend_verify_arg_error(zf, arg_num, "be of the type ", zend_get_type_by_const(cur_arg_info->type_hint), zend_zval_type_name(arg), "", arg);
+					return 0;
+				}
 			}
 		}
 	}
