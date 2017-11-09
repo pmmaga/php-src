@@ -36,6 +36,7 @@
 #include "zend_exceptions.h"
 #include "zend_operators.h"
 #include "zend_constants.h"
+#include "zend_compile.h"
 #include "zend_ini.h"
 #include "zend_interfaces.h"
 #include "zend_closures.h"
@@ -2918,6 +2919,22 @@ ZEND_METHOD(reflection_type, isBuiltin)
 	RETVAL_BOOL(ZEND_TYPE_IS_CODE(param->arg_info->type));
 }
 /* }}} */
+
+/* {{{ proto public bool ReflectionType::isStrict()
+   Returns whether this parameter is strictly typed */
+   ZEND_METHOD(reflection_type, isStrict)
+   {
+	   reflection_object *intern;
+	   type_reference *param;
+   
+	   if (zend_parse_parameters_none() == FAILURE) {
+		   return;
+	   }
+	   GET_REFLECTION_OBJECT_PTR(param);
+   
+	   RETVAL_BOOL(param->fptr->common.fn_flags & ZEND_ACC_STRICT_TYPES);
+   }
+   /* }}} */
 
 /* {{{ reflection_type_name */
 static zend_string *reflection_type_name(type_reference *param) {
@@ -6636,6 +6653,7 @@ static const zend_function_entry reflection_type_functions[] = {
 	ZEND_ME(reflection, __clone, arginfo_reflection__void, ZEND_ACC_PRIVATE|ZEND_ACC_FINAL)
 	ZEND_ME(reflection_type, allowsNull, arginfo_reflection__void, 0)
 	ZEND_ME(reflection_type, isBuiltin, arginfo_reflection__void, 0)
+	ZEND_ME(reflection_type, isStrict, arginfo_reflection__void, 0)
 	/* ReflectionType::__toString() is deprecated, but we currently do not mark it as such
 	 * due to bad interaction with the PHPUnit error handler and exceptions in __toString().
 	 * See PR2137. */
