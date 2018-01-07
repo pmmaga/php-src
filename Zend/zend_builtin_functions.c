@@ -1006,7 +1006,7 @@ static void is_a_impl(INTERNAL_FUNCTION_PARAMETERS, zend_bool only_subclass) /* 
 			if (only_subclass && instance_ce == ce) {
 				retval = 0;
 			} else {
-				retval = instanceof_function(instance_ce, ce);
+				retval = instanceof_function_ex2(instance_ce, ce, 0, 1);
 			}
 		}
 	}

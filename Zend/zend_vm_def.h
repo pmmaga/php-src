@@ -6895,7 +6895,7 @@ ZEND_VM_C_LABEL(try_instanceof):
 		} else {
 			ce = Z_CE_P(EX_VAR(opline->op2.var));
 		}
-		result = ce && instanceof_function(Z_OBJCE_P(expr), ce);
+		result = ce && instanceof_function_ex2(Z_OBJCE_P(expr), ce, 0, 1);
 	} else if ((OP1_TYPE & (IS_VAR|IS_CV)) && Z_TYPE_P(expr) == IS_REFERENCE) {
 		expr = Z_REFVAL_P(expr);
 		ZEND_VM_C_GOTO(try_instanceof);

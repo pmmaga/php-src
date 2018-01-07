@@ -36,10 +36,6 @@ echo "class_a\n";
 
 class class_a extends base implements if_a {
 	function f_a() {}
-	function f_b() {}
-	function f_c() {}
-	function f_d() {}
-	function f_e() {}
 }
 
 $t = new class_a();
@@ -54,9 +50,6 @@ echo "class_b\n";
 class class_b extends base implements if_a, if_b {
 	function f_a() {}
 	function f_b() {}
-	function f_c() {}
-	function f_d() {}
-	function f_e() {}
 }
 
 $t = new class_b();
@@ -72,8 +65,6 @@ class class_c extends base implements if_c {
 	function f_a() {}
 	function f_b() {}
 	function f_c() {}
-	function f_d() {}
-	function f_e() {}
 }
 
 $t = new class_c();
@@ -88,9 +79,7 @@ echo "class_d\n";
 class class_d extends base implements if_d{
 	function f_a() {}
 	function f_b() {}
-	function f_c() {}
 	function f_d() {}
-	function f_e() {}
 }
 
 $t = new class_d();
@@ -107,7 +96,6 @@ class class_e extends base implements if_a, if_b, if_c, if_d {
 	function f_b() {}
 	function f_c() {}
 	function f_d() {}
-	function f_e() {}
 }
 
 $t = new class_e();
@@ -120,11 +108,7 @@ echo $t->test('if_e');
 echo "class_f\n";
 
 class class_f extends base implements if_e {
-	function f_a() {}
-	function f_b() {}
-	function f_c() {}
 	function f_d() {}
-	function f_e() {}
 }
 
 $t = new class_f();
@@ -177,13 +161,13 @@ is_a(class_d, if_a) yes
 is_a(class_d, if_b) yes
 is_a(class_d, if_c) no
 is_a(class_d, if_d) yes
-is_a(class_d, if_e) no
+is_a(class_d, if_e) yes
 class_e
 is_a(class_e, if_a) yes
 is_a(class_e, if_b) yes
 is_a(class_e, if_c) yes
 is_a(class_e, if_d) yes
-is_a(class_e, if_e) no
+is_a(class_e, if_e) yes
 class_f
 is_a(class_f, if_a) no
 is_a(class_f, if_b) no
@@ -195,5 +179,5 @@ is_a(class_g, if_a) yes
 is_a(class_g, if_b) yes
 is_a(class_g, if_c) yes
 is_a(class_g, if_d) yes
-is_a(class_g, if_e) no
+is_a(class_g, if_e) yes
 ===DONE===

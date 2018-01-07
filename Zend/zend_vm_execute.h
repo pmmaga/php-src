@@ -14926,7 +14926,7 @@ try_instanceof:
 		} else {
 			ce = Z_CE_P(EX_VAR(opline->op2.var));
 		}
-		result = ce && instanceof_function(Z_OBJCE_P(expr), ce);
+		result = ce && instanceof_function_ex2(Z_OBJCE_P(expr), ce, 0, 1);
 	} else if (((IS_TMP_VAR|IS_VAR) & (IS_VAR|IS_CV)) && Z_TYPE_P(expr) == IS_REFERENCE) {
 		expr = Z_REFVAL_P(expr);
 		goto try_instanceof;
@@ -16657,7 +16657,7 @@ try_instanceof:
 		} else {
 			ce = Z_CE_P(EX_VAR(opline->op2.var));
 		}
-		result = ce && instanceof_function(Z_OBJCE_P(expr), ce);
+		result = ce && instanceof_function_ex2(Z_OBJCE_P(expr), ce, 0, 1);
 	} else if (((IS_TMP_VAR|IS_VAR) & (IS_VAR|IS_CV)) && Z_TYPE_P(expr) == IS_REFERENCE) {
 		expr = Z_REFVAL_P(expr);
 		goto try_instanceof;
@@ -17159,7 +17159,7 @@ try_instanceof:
 		} else {
 			ce = Z_CE_P(EX_VAR(opline->op2.var));
 		}
-		result = ce && instanceof_function(Z_OBJCE_P(expr), ce);
+		result = ce && instanceof_function_ex2(Z_OBJCE_P(expr), ce, 0, 1);
 	} else if (((IS_TMP_VAR|IS_VAR) & (IS_VAR|IS_CV)) && Z_TYPE_P(expr) == IS_REFERENCE) {
 		expr = Z_REFVAL_P(expr);
 		goto try_instanceof;
@@ -43163,7 +43163,7 @@ try_instanceof:
 		} else {
 			ce = Z_CE_P(EX_VAR(opline->op2.var));
 		}
-		result = ce && instanceof_function(Z_OBJCE_P(expr), ce);
+		result = ce && instanceof_function_ex2(Z_OBJCE_P(expr), ce, 0, 1);
 	} else if ((IS_CV & (IS_VAR|IS_CV)) && Z_TYPE_P(expr) == IS_REFERENCE) {
 		expr = Z_REFVAL_P(expr);
 		goto try_instanceof;
@@ -47497,7 +47497,7 @@ try_instanceof:
 		} else {
 			ce = Z_CE_P(EX_VAR(opline->op2.var));
 		}
-		result = ce && instanceof_function(Z_OBJCE_P(expr), ce);
+		result = ce && instanceof_function_ex2(Z_OBJCE_P(expr), ce, 0, 1);
 	} else if ((IS_CV & (IS_VAR|IS_CV)) && Z_TYPE_P(expr) == IS_REFERENCE) {
 		expr = Z_REFVAL_P(expr);
 		goto try_instanceof;
@@ -48942,7 +48942,7 @@ try_instanceof:
 		} else {
 			ce = Z_CE_P(EX_VAR(opline->op2.var));
 		}
-		result = ce && instanceof_function(Z_OBJCE_P(expr), ce);
+		result = ce && instanceof_function_ex2(Z_OBJCE_P(expr), ce, 0, 1);
 	} else if ((IS_CV & (IS_VAR|IS_CV)) && Z_TYPE_P(expr) == IS_REFERENCE) {
 		expr = Z_REFVAL_P(expr);
 		goto try_instanceof;
