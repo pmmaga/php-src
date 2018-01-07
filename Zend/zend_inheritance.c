@@ -1083,7 +1083,7 @@ ZEND_API void zend_do_implement_interface(zend_class_entry *ce, zend_class_entry
 }
 /* }}} */
 
-ZEND_API zend_bool zend_do_implicit_interface_check(const zend_class_entry *ce, const zend_class_entry *iface) /* {{{ */
+ZEND_API zend_bool zend_do_implicit_interface_check(zend_class_entry *ce, zend_class_entry *iface) /* {{{ */
 {
 	zend_function *func;
 	zend_string *key;

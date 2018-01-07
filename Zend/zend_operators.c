@@ -2230,11 +2230,6 @@ static zend_bool ZEND_FASTCALL instanceof_interface_only(const zend_class_entry 
 			return 1;
 		}
 	}
-
-	if (ZEND_USER_CODE(instance_ce->type)) {
-		return zend_do_implicit_interface_check(instance_ce, ce);
-	}
-
 	return 0;
 }
 /* }}} */
@@ -2261,14 +2256,29 @@ static zend_bool ZEND_FASTCALL instanceof_interface(const zend_class_entry *inst
 		}
 	}
 
-	if (instanceof_class(instance_ce, ce)) {
-		return 1;
-	}
+	return instanceof_class(instance_ce, ce);
+}
+/* }}} */
 
-	if (ZEND_USER_CODE(instance_ce->type)) {
-		return zend_do_implicit_interface_check(instance_ce, ce);
+ZEND_API zend_bool ZEND_FASTCALL instanceof_function_ex2(zend_class_entry *instance_ce, zend_class_entry *ce, zend_bool interfaces_only, zend_bool allow_implicit) /* {{{ */
+{
+	if (ce->ce_flags & ZEND_ACC_INTERFACE) {
+		if (interfaces_only) {
+			if (instanceof_interface_only(instance_ce, ce)) {
+				return 1;
+			}
+		} else {
+			if(instanceof_interface(instance_ce, ce)) {
+				return 1;
+			}
+		}
+		if (ZEND_USER_CODE(instance_ce->type) && allow_implicit) {
+			return zend_do_implicit_interface_check(instance_ce, ce);
+		}
 	}
-
+	if (!interfaces_only) {
+		return instanceof_class(instance_ce, ce);
+	}
 	return 0;
 }
 /* }}} */

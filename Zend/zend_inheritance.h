@@ -26,7 +26,7 @@ BEGIN_EXTERN_C()
 
 ZEND_API void zend_do_inherit_interfaces(zend_class_entry *ce, const zend_class_entry *iface);
 ZEND_API void zend_do_implement_interface(zend_class_entry *ce, zend_class_entry *iface);
-ZEND_API zend_bool zend_do_implicit_interface_check(const zend_class_entry *ce, const zend_class_entry *iface);
+ZEND_API zend_bool zend_do_implicit_interface_check(zend_class_entry *ce, zend_class_entry *iface);
 
 ZEND_API void zend_do_implement_trait(zend_class_entry *ce, zend_class_entry *trait);
 ZEND_API void zend_do_bind_traits(zend_class_entry *ce);
