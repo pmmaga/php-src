@@ -1109,7 +1109,9 @@ ZEND_API zend_bool zend_do_implicit_interface_check(zend_class_entry *ce, zend_c
 	} ZEND_HASH_FOREACH_END();
 
 	/* The interface is implicitly implimented, so we can add it as an explicit interface */
-	zend_do_implement_interface(ce, iface);
+	if ((ce->ce_flags & ZEND_ACC_INTERFACE) == 0) {
+		zend_do_implement_interface(ce, iface);
+	}
 	return 1;
 }
 /* }}} */
