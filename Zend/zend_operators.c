@@ -2276,7 +2276,7 @@ static zend_bool ZEND_FASTCALL instanceof_interface(const zend_class_entry *inst
 ZEND_API zend_bool ZEND_FASTCALL instanceof_function_ex(const zend_class_entry *instance_ce, const zend_class_entry *ce, zend_bool interfaces_only) /* {{{ */
 {
 	if (ce->ce_flags & ZEND_ACC_INTERFACE) {
-		if (!interfaces_only) {
+		if (interfaces_only) {
 			if (instanceof_interface_only(instance_ce, ce)) {
 				return 1;
 			}
