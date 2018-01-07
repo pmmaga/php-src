@@ -4711,7 +4711,7 @@ ZEND_METHOD(reflection_class, isInstance)
 		return;
 	}
 	GET_REFLECTION_OBJECT_PTR(ce);
-	RETURN_BOOL(instanceof_function(Z_OBJCE_P(object), ce));
+	RETURN_BOOL(instanceof_function_ex2(Z_OBJCE_P(object), ce, 0, 1));
 }
 /* }}} */
 
@@ -5144,7 +5144,7 @@ ZEND_METHOD(reflection_class, implementsInterface)
 				"Interface %s is a Class", ZSTR_VAL(interface_ce->name));
 		return;
 	}
-	RETURN_BOOL(instanceof_function(ce, interface_ce));
+	RETURN_BOOL(instanceof_function_ex2(ce, interface_ce, 0, 1));
 }
 /* }}} */
 

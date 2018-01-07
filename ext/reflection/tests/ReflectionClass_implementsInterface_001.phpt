@@ -79,8 +79,8 @@ Does A implement I1?
    - Using object argument: bool(true)
    - Using string argument: bool(true)
 Does A implement I2? 
-   - Using object argument: bool(false)
-   - Using string argument: bool(false)
+   - Using object argument: bool(true)
+   - Using string argument: bool(true)
 Does B implement A? 
    - Using object argument: Interface A is a Class
    - Using string argument: Interface A is a Class
@@ -94,8 +94,8 @@ Does B implement I1?
    - Using object argument: bool(true)
    - Using string argument: bool(true)
 Does B implement I2? 
-   - Using object argument: bool(false)
-   - Using string argument: bool(false)
+   - Using object argument: bool(true)
+   - Using string argument: bool(true)
 Does C implement A? 
    - Using object argument: Interface A is a Class
    - Using string argument: Interface A is a Class
@@ -124,8 +124,8 @@ Does I1 implement I1?
    - Using object argument: bool(true)
    - Using string argument: bool(true)
 Does I1 implement I2? 
-   - Using object argument: bool(false)
-   - Using string argument: bool(false)
+   - Using object argument: bool(true)
+   - Using string argument: bool(true)
 Does I2 implement A? 
    - Using object argument: Interface A is a Class
    - Using string argument: Interface A is a Class
