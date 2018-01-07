@@ -1004,9 +1004,8 @@ static zend_bool do_inherit_constant_check(HashTable *child_constants_table, zen
 	if (zv != NULL) {
 		old_constant = (zend_class_constant*)Z_PTR_P(zv);
 		if (old_constant->ce != parent_constant->ce) {
-			zend_error_noreturn(E_COMPILE_ERROR, "Cannot inherit previously-inherited or override constant %s from interface %s", ZSTR_VAL(name), ZSTR_VAL(iface->name));
+			return 0;
 		}
-		return 0;
 	}
 	return 1;
 }
@@ -1025,6 +1024,8 @@ static void do_inherit_iface_constant(zend_string *name, zend_class_constant *c,
 			c = ct;
 		}
 		zend_hash_update_ptr(&ce->constants_table, name, c);
+	} else {
+		zend_error_noreturn(E_COMPILE_ERROR, "Cannot inherit previously-inherited or override constant %s from interface %s", ZSTR_VAL(name), ZSTR_VAL(iface->name));
 	}
 }
 /* }}} */
@@ -1053,7 +1054,9 @@ ZEND_API void zend_do_implement_interface(zend_class_entry *ce, zend_class_entry
 	if (ignore) {
 		/* Check for attempt to redeclare interface constants */
 		ZEND_HASH_FOREACH_STR_KEY_PTR(&ce->constants_table, key, c) {
-			do_inherit_constant_check(&iface->constants_table, c, key, iface);
+			if(!do_inherit_constant_check(&iface->constants_table, c, key, iface)) {
+				zend_error_noreturn(E_COMPILE_ERROR, "Cannot inherit previously-inherited or override constant %s from interface %s", ZSTR_VAL(key), ZSTR_VAL(iface->name));
+			}
 		} ZEND_HASH_FOREACH_END();
 	} else {
 		if (ce->num_interfaces >= current_iface_num) {
@@ -1085,8 +1088,15 @@ ZEND_API void zend_do_implement_interface(zend_class_entry *ce, zend_class_entry
 
 ZEND_API zend_bool zend_do_implicit_interface_check(zend_class_entry *ce, zend_class_entry *iface) /* {{{ */
 {
+	zend_class_constant *c;
 	zend_function *func;
 	zend_string *key;
+
+	ZEND_HASH_FOREACH_STR_KEY_PTR(&ce->constants_table, key, c) {
+		if(!do_inherit_constant_check(&iface->constants_table, c, key, iface)) {
+			return 0;
+		}
+	} ZEND_HASH_FOREACH_END();
 
 	ZEND_HASH_FOREACH_STR_KEY_PTR(&iface->function_table, key, func) {
 		zval *child = zend_hash_find_ex(&ce->function_table, key, 1);
@@ -1098,6 +1108,8 @@ ZEND_API zend_bool zend_do_implicit_interface_check(zend_class_entry *ce, zend_c
 		}
 	} ZEND_HASH_FOREACH_END();
 
+	/* The interface is implicitly implimented, so we can add it as an explicit interface */
+	zend_do_implement_interface(ce, iface);
 	return 1;
 }
 /* }}} */
