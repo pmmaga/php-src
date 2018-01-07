@@ -1083,6 +1083,25 @@ ZEND_API void zend_do_implement_interface(zend_class_entry *ce, zend_class_entry
 }
 /* }}} */
 
+ZEND_API zend_bool zend_do_implicit_interface_check(const zend_class_entry *ce, const zend_class_entry *iface) /* {{{ */
+{
+	zend_function *func;
+	zend_string *key;
+
+	ZEND_HASH_FOREACH_STR_KEY_PTR(&iface->function_table, key, func) {
+		zval *child = zend_hash_find_ex(&ce->function_table, key, 1);
+		if(!child) {
+			return 0;
+		}
+		if(!zend_do_perform_implementation_check((zend_function*)Z_PTR_P(child), func)) {
+			return 0;
+		}
+	} ZEND_HASH_FOREACH_END();
+
+	return 1;
+}
+/* }}} */
+
 ZEND_API void zend_do_implement_trait(zend_class_entry *ce, zend_class_entry *trait) /* {{{ */
 {
 	uint32_t i, ignore = 0;

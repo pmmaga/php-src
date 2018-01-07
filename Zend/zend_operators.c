@@ -31,6 +31,7 @@
 #include "zend_strtod.h"
 #include "zend_exceptions.h"
 #include "zend_closures.h"
+#include "zend_inheritance.h"
 
 #if ZEND_USE_TOLOWER_L
 #include <locale.h>
@@ -2229,6 +2230,11 @@ static zend_bool ZEND_FASTCALL instanceof_interface_only(const zend_class_entry 
 			return 1;
 		}
 	}
+
+	if (ZEND_USER_CODE(instance_ce->type)) {
+		return zend_do_implicit_interface_check(instance_ce, ce);
+	}
+
 	return 0;
 }
 /* }}} */
@@ -2254,7 +2260,16 @@ static zend_bool ZEND_FASTCALL instanceof_interface(const zend_class_entry *inst
 			return 1;
 		}
 	}
-	return instanceof_class(instance_ce, ce);
+
+	if (instanceof_class(instance_ce, ce)) {
+		return 1;
+	}
+
+	if (ZEND_USER_CODE(instance_ce->type)) {
+		return zend_do_implicit_interface_check(instance_ce, ce);
+	}
+
+	return 0;
 }
 /* }}} */
 
