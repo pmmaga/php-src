@@ -1089,7 +1089,7 @@ ZEND_API void zend_do_implement_interface(zend_class_entry *ce, zend_class_entry
 ZEND_API zend_bool zend_do_implicit_interface_check(zend_class_entry *ce, zend_class_entry *iface) /* {{{ */
 {
 	zend_class_constant *c;
-	zend_function *func;
+	zend_function *func, *child_func;
 	zend_string *key;
 
 	ZEND_HASH_FOREACH_STR_KEY_PTR(&ce->constants_table, key, c) {
@@ -1103,7 +1103,14 @@ ZEND_API zend_bool zend_do_implicit_interface_check(zend_class_entry *ce, zend_c
 		if(!child) {
 			return 0;
 		}
-		if(!zend_do_perform_implementation_check((zend_function*)Z_PTR_P(child), func)) {
+		child_func = (zend_function*)Z_PTR_P(child);
+		if ((child_func->common.fn_flags & ZEND_ACC_STATIC) != (func->common.fn_flags & ZEND_ACC_STATIC)) {
+			return 0;
+		}
+		if ((child_func->common.fn_flags & ZEND_ACC_PPP_MASK) != (func->common.fn_flags & ZEND_ACC_PPP_MASK)) {
+			return 0;
+		}
+		if(!zend_do_perform_implementation_check(child_func, func)) {
 			return 0;
 		}
 	} ZEND_HASH_FOREACH_END();
