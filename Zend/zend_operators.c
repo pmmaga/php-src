@@ -2262,8 +2262,17 @@ static zend_bool ZEND_FASTCALL instanceof_interface(const zend_class_entry *inst
 
 ZEND_API zend_bool ZEND_FASTCALL instanceof_function_ex2(zend_class_entry *instance_ce, zend_class_entry *ce, zend_bool interfaces_only, zend_bool allow_implicit) /* {{{ */
 {
-	if(instanceof_function_ex(instance_ce, ce, interfaces_only)) {
-		return 1;
+	/* This separation is made instead of direct use of the _ex() variant because it's behavior with 
+		interfaces_only set to 0 is different than instanceof_function in that it won't check for
+		parent interfaces of the interfaces of the instance */
+	if(interfaces_only) {
+		if(instanceof_function_ex(instance_ce, ce, 1)) {
+			return 1;
+		}
+	} else {
+		if(instanceof_function(instance_ce, ce)) {
+			return 1;
+		}
 	}
 	if ((ce->ce_flags & ZEND_ACC_INTERFACE) && allow_implicit) {
 		return zend_do_implicit_interface_check(instance_ce, ce);
@@ -2275,7 +2284,7 @@ ZEND_API zend_bool ZEND_FASTCALL instanceof_function_ex2(zend_class_entry *insta
 ZEND_API zend_bool ZEND_FASTCALL instanceof_function_ex(const zend_class_entry *instance_ce, const zend_class_entry *ce, zend_bool interfaces_only) /* {{{ */
 {
 	if (ce->ce_flags & ZEND_ACC_INTERFACE) {
-		if (interfaces_only) {
+		if (!interfaces_only) {
 			if (instanceof_interface_only(instance_ce, ce)) {
 				return 1;
 			}
