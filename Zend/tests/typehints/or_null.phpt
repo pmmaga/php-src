@@ -14,7 +14,7 @@ try {
 }
 
 class RealClass {}
-interface RealInterface {}
+interface RealInterface { function notPresent(); }
 
 function loadedClass(?RealClass $param) {}
 function loadedInterface(?RealInterface $param) {}
