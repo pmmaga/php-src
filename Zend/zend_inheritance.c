@@ -181,7 +181,7 @@ static zend_always_inline zend_bool zend_iterable_compatibility_check(zend_arg_i
 }
 /* }}} */
 
-static int zend_do_perform_type_hint_check(const zend_function *fe, zend_arg_info *fe_arg_info, const zend_function *proto, zend_arg_info *proto_arg_info) /* {{{ */
+static int zend_do_perform_type_hint_check(const zend_function *fe, zend_arg_info *fe_arg_info, const zend_function *proto, zend_arg_info *proto_arg_info, zend_long variance_mode) /* {{{ */
 {
 	ZEND_ASSERT(ZEND_TYPE_IS_SET(fe_arg_info->type) && ZEND_TYPE_IS_SET(proto_arg_info->type));
 
@@ -223,6 +223,23 @@ static int zend_do_perform_type_hint_check(const zend_function *fe, zend_arg_inf
 				fe_ce = zend_lookup_class(fe_class_name);
 				proto_ce = zend_lookup_class(proto_class_name);
 
+				// covariant
+				if (fe_ce && proto_ce && variance_mode == 1) {
+					if(instanceof_function(fe_ce, proto_ce)) {
+						zend_string_release(proto_class_name);
+						zend_string_release(fe_class_name);
+						return 1;
+					}
+				}
+				// contravariant
+				if (fe_ce && proto_ce && variance_mode == -1) {
+					if(instanceof_function(proto_ce, fe_ce)) {
+						zend_string_release(proto_class_name);
+						zend_string_release(fe_class_name);
+						return 1;
+					}
+				}
+
 				/* Check for class alias */
 				if (!fe_ce || !proto_ce ||
 						fe_ce->type == ZEND_INTERNAL_CLASS ||
@@ -257,7 +274,7 @@ static int zend_do_perform_arg_type_hint_check(const zend_function *fe, zend_arg
 		return 0;
 	}
 
-	return zend_do_perform_type_hint_check(fe, fe_arg_info, proto, proto_arg_info);
+	return zend_do_perform_type_hint_check(fe, fe_arg_info, proto, proto_arg_info, -1);
 }
 /* }}} */
 
@@ -362,7 +379,7 @@ static zend_bool zend_do_perform_implementation_check(const zend_function *fe, c
 			return 0;
 		}
 
-		if (!zend_do_perform_type_hint_check(fe, fe->common.arg_info - 1, proto, proto->common.arg_info - 1)) {
+		if (!zend_do_perform_type_hint_check(fe, fe->common.arg_info - 1, proto, proto->common.arg_info - 1, 1)) {
 			switch (ZEND_TYPE_CODE(proto->common.arg_info[-1].type)) {
 				case IS_ITERABLE:
 					if (!zend_iterable_compatibility_check(fe->common.arg_info - 1)) {
@@ -610,7 +627,7 @@ static void do_inheritance_check_on_method(zend_function *child, zend_function *
 			error_verb = "must";
 		} else if ((parent->common.fn_flags & ZEND_ACC_HAS_RETURN_TYPE) &&
                    (!(child->common.fn_flags & ZEND_ACC_HAS_RETURN_TYPE) ||
-		            !zend_do_perform_type_hint_check(child, child->common.arg_info - 1, parent, parent->common.arg_info - 1) ||
+		            !zend_do_perform_type_hint_check(child, child->common.arg_info - 1, parent, parent->common.arg_info - 1, 1) ||
 		            (ZEND_TYPE_ALLOW_NULL(child->common.arg_info[-1].type) && !ZEND_TYPE_ALLOW_NULL(parent->common.arg_info[-1].type)))) {
 			error_level = E_COMPILE_ERROR;
 			error_verb = "must";
