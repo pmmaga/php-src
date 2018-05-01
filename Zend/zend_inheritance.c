@@ -720,15 +720,13 @@ static inline void do_implement_interface(zend_class_entry *ce, zend_class_entry
 }
 /* }}} */
 
-static zend_bool do_inherit_constant_check(const HashTable *child_constants_table, zend_class_constant *parent_constant, zend_string *name, const zend_class_entry *iface) /* {{{ */
+static zend_bool do_inherit_constant_check(const HashTable *child_constants_table, zend_class_constant *parent_constant, zend_string *name, const zend_class_entry *parent) /* {{{ */
 {
 	zval *zv = zend_hash_find_ex(child_constants_table, name, 1);
-	zend_class_constant *old_constant;
 
 	if (zv != NULL) {
-		old_constant = (zend_class_constant*)Z_PTR_P(zv);
-		if (old_constant->ce != parent_constant->ce) {
-			zend_error_noreturn(E_COMPILE_ERROR, "Cannot inherit previously-inherited or override constant %s from interface %s", ZSTR_VAL(name), ZSTR_VAL(iface->name));
+		if (Z_ACCESS_FLAGS(parent_constant->value) & ZEND_ACC_FINAL) {
+			zend_error_noreturn(E_COMPILE_ERROR, "Cannot override final constant %s::%s", ZSTR_VAL(parent->name), ZSTR_VAL(name));
 		}
 		return 0;
 	}
@@ -787,6 +785,7 @@ static void do_inherit_class_constant(zend_string *name, zend_class_constant *pa
 
 	if (zv != NULL) {
 		c = (zend_class_constant*)Z_PTR_P(zv);
+		do_inherit_constant_check(&ce->constants_table, parent_const, name, parent_const->ce);
 		if (UNEXPECTED((Z_ACCESS_FLAGS(c->value) & ZEND_ACC_PPP_MASK) > (Z_ACCESS_FLAGS(parent_const->value) & ZEND_ACC_PPP_MASK))) {
 			zend_error_noreturn(E_COMPILE_ERROR, "Access level to %s::%s must be %s (as in class %s)%s",
 				ZSTR_VAL(ce->name), ZSTR_VAL(name), zend_visibility_string(Z_ACCESS_FLAGS(parent_const->value)), ZSTR_VAL(ce->parent->name), (Z_ACCESS_FLAGS(parent_const->value) & ZEND_ACC_PUBLIC) ? "" : " or weaker");

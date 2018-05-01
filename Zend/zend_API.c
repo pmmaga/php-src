@@ -3880,7 +3880,7 @@ ZEND_API int zend_declare_class_constant_ex(zend_class_entry *ce, zend_string *n
 	zend_class_constant *c;
 
 	if (ce->ce_flags & ZEND_ACC_INTERFACE) {
-		if (access_type != ZEND_ACC_PUBLIC) {
+		if ((access_type & ZEND_ACC_PPP_MASK) != ZEND_ACC_PUBLIC) {
 			zend_error_noreturn(E_COMPILE_ERROR, "Access type for interface constant %s::%s must be public", ZSTR_VAL(ce->name), ZSTR_VAL(name));
 		}
 	}
