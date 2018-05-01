@@ -720,11 +720,29 @@ static inline void do_implement_interface(zend_class_entry *ce, zend_class_entry
 }
 /* }}} */
 
-ZEND_API void zend_do_inherit_interfaces(zend_class_entry *ce, const zend_class_entry *iface) /* {{{ */
+static zend_bool do_inherit_constant_check(const HashTable *child_constants_table, zend_class_constant *parent_constant, zend_string *name, const zend_class_entry *iface) /* {{{ */
+{
+	zval *zv = zend_hash_find_ex(child_constants_table, name, 1);
+	zend_class_constant *old_constant;
+
+	if (zv != NULL) {
+		old_constant = (zend_class_constant*)Z_PTR_P(zv);
+		if (old_constant->ce != parent_constant->ce) {
+			zend_error_noreturn(E_COMPILE_ERROR, "Cannot inherit previously-inherited or override constant %s from interface %s", ZSTR_VAL(name), ZSTR_VAL(iface->name));
+		}
+		return 0;
+	}
+	return 1;
+}
+/* }}} */
+
+ZEND_API void zend_do_inherit_interfaces(zend_class_entry *ce, zend_class_entry *iface) /* {{{ */
 {
 	/* expects interface to be contained in ce's interface list already */
 	uint32_t i, ce_num, if_num = iface->num_interfaces;
 	zend_class_entry *entry;
+	zend_class_constant *c;
+	zend_string *key;
 
 	if (if_num==0) {
 		return;
@@ -749,6 +767,11 @@ ZEND_API void zend_do_inherit_interfaces(zend_class_entry *ce, const zend_class_
 			ce->interfaces[ce->num_interfaces++] = entry;
 		}
 	}
+
+	/* Check for attempt to redeclare interface constants */
+	ZEND_HASH_FOREACH_STR_KEY_PTR(&iface->constants_table, key, c) {
+		do_inherit_constant_check(&ce->constants_table, c, key, iface);
+	} ZEND_HASH_FOREACH_END();
 
 	/* and now call the implementing handlers */
 	while (ce_num < ce->num_interfaces) {
@@ -990,22 +1013,6 @@ ZEND_API void zend_do_inheritance(zend_class_entry *ce, zend_class_entry *parent
 }
 /* }}} */
 
-static zend_bool do_inherit_constant_check(HashTable *child_constants_table, zend_class_constant *parent_constant, zend_string *name, const zend_class_entry *iface) /* {{{ */
-{
-	zval *zv = zend_hash_find_ex(child_constants_table, name, 1);
-	zend_class_constant *old_constant;
-
-	if (zv != NULL) {
-		old_constant = (zend_class_constant*)Z_PTR_P(zv);
-		if (old_constant->ce != parent_constant->ce) {
-			zend_error_noreturn(E_COMPILE_ERROR, "Cannot inherit previously-inherited or override constant %s from interface %s", ZSTR_VAL(name), ZSTR_VAL(iface->name));
-		}
-		return 0;
-	}
-	return 1;
-}
-/* }}} */
-
 static void do_inherit_iface_constant(zend_string *name, zend_class_constant *c, zend_class_entry *ce, zend_class_entry *iface) /* {{{ */
 {
 	if (do_inherit_constant_check(&ce->constants_table, c, name, iface)) {
@@ -1046,8 +1053,8 @@ ZEND_API void zend_do_implement_interface(zend_class_entry *ce, zend_class_entry
 	}
 	if (ignore) {
 		/* Check for attempt to redeclare interface constants */
-		ZEND_HASH_FOREACH_STR_KEY_PTR(&ce->constants_table, key, c) {
-			do_inherit_constant_check(&iface->constants_table, c, key, iface);
+		ZEND_HASH_FOREACH_STR_KEY_PTR(&iface->constants_table, key, c) {
+			do_inherit_constant_check(&ce->constants_table, c, key, iface);
 		} ZEND_HASH_FOREACH_END();
 	} else {
 		if (ce->num_interfaces >= current_iface_num) {
