@@ -720,13 +720,13 @@ static inline void do_implement_interface(zend_class_entry *ce, zend_class_entry
 }
 /* }}} */
 
-static zend_bool do_inherit_constant_check(const HashTable *child_constants_table, zend_class_constant *parent_constant, zend_string *name, const zend_class_entry *parent) /* {{{ */
+static zend_bool do_inherit_constant_check(const HashTable *child_constants_table, zend_class_constant *parent_constant, zend_string *name) /* {{{ */
 {
 	zval *zv = zend_hash_find_ex(child_constants_table, name, 1);
 
 	if (zv != NULL) {
 		if (Z_ACCESS_FLAGS(parent_constant->value) & ZEND_ACC_FINAL) {
-			zend_error_noreturn(E_COMPILE_ERROR, "Cannot override final constant %s::%s", ZSTR_VAL(parent->name), ZSTR_VAL(name));
+			zend_error_noreturn(E_COMPILE_ERROR, "Cannot override final constant %s::%s", ZSTR_VAL(parent_constant->ce->name), ZSTR_VAL(name));
 		}
 		return 0;
 	}
@@ -768,7 +768,7 @@ ZEND_API void zend_do_inherit_interfaces(zend_class_entry *ce, zend_class_entry 
 
 	/* Check for attempt to redeclare interface constants */
 	ZEND_HASH_FOREACH_STR_KEY_PTR(&iface->constants_table, key, c) {
-		do_inherit_constant_check(&ce->constants_table, c, key, iface);
+		do_inherit_constant_check(&ce->constants_table, c, key);
 	} ZEND_HASH_FOREACH_END();
 
 	/* and now call the implementing handlers */
@@ -785,7 +785,7 @@ static void do_inherit_class_constant(zend_string *name, zend_class_constant *pa
 
 	if (zv != NULL) {
 		c = (zend_class_constant*)Z_PTR_P(zv);
-		do_inherit_constant_check(&ce->constants_table, parent_const, name, parent_const->ce);
+		do_inherit_constant_check(&ce->constants_table, parent_const, name);
 		if (UNEXPECTED((Z_ACCESS_FLAGS(c->value) & ZEND_ACC_PPP_MASK) > (Z_ACCESS_FLAGS(parent_const->value) & ZEND_ACC_PPP_MASK))) {
 			zend_error_noreturn(E_COMPILE_ERROR, "Access level to %s::%s must be %s (as in class %s)%s",
 				ZSTR_VAL(ce->name), ZSTR_VAL(name), zend_visibility_string(Z_ACCESS_FLAGS(parent_const->value)), ZSTR_VAL(ce->parent->name), (Z_ACCESS_FLAGS(parent_const->value) & ZEND_ACC_PUBLIC) ? "" : " or weaker");
@@ -1012,9 +1012,9 @@ ZEND_API void zend_do_inheritance(zend_class_entry *ce, zend_class_entry *parent
 }
 /* }}} */
 
-static void do_inherit_iface_constant(zend_string *name, zend_class_constant *c, zend_class_entry *ce, zend_class_entry *iface) /* {{{ */
+static void do_inherit_iface_constant(zend_string *name, zend_class_constant *c, zend_class_entry *ce) /* {{{ */
 {
-	if (do_inherit_constant_check(&ce->constants_table, c, name, iface)) {
+	if (do_inherit_constant_check(&ce->constants_table, c, name)) {
 		zend_class_constant *ct;
 		if (Z_TYPE(c->value) == IS_CONSTANT_AST) {
 			ce->ce_flags &= ~ZEND_ACC_CONSTANTS_UPDATED;
@@ -1053,7 +1053,7 @@ ZEND_API void zend_do_implement_interface(zend_class_entry *ce, zend_class_entry
 	if (ignore) {
 		/* Check for attempt to redeclare interface constants */
 		ZEND_HASH_FOREACH_STR_KEY_PTR(&iface->constants_table, key, c) {
-			do_inherit_constant_check(&ce->constants_table, c, key, iface);
+			do_inherit_constant_check(&ce->constants_table, c, key);
 		} ZEND_HASH_FOREACH_END();
 	} else {
 		if (ce->num_interfaces >= current_iface_num) {
@@ -1066,7 +1066,7 @@ ZEND_API void zend_do_implement_interface(zend_class_entry *ce, zend_class_entry
 		ce->interfaces[ce->num_interfaces++] = iface;
 
 		ZEND_HASH_FOREACH_STR_KEY_PTR(&iface->constants_table, key, c) {
-			do_inherit_iface_constant(key, c, ce, iface);
+			do_inherit_iface_constant(key, c, ce);
 		} ZEND_HASH_FOREACH_END();
 
 		ZEND_HASH_FOREACH_STR_KEY_PTR(&iface->function_table, key, func) {
