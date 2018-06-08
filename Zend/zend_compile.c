@@ -6768,6 +6768,7 @@ static zend_bool zend_try_ct_eval_magic_const(zval *zv, zend_ast *ast) /* {{{ */
 {
 	zend_op_array *op_array = CG(active_op_array);
 	zend_class_entry *ce = CG(active_class_entry);
+	zend_bool has_function_name = op_array && op_array->function_name;
 
 	switch (ast->attr) {
 		case T_LINE:
@@ -6800,23 +6801,17 @@ static zend_bool zend_try_ct_eval_magic_const(zval *zv, zend_ast *ast) /* {{{ */
 			break;
 		}
 		case T_FUNC_C:
-			if (op_array && op_array->function_name) {
+			if (has_function_name) {
 				ZVAL_STR_COPY(zv, op_array->function_name);
 			} else {
 				ZVAL_EMPTY_STRING(zv);
 			}
 			break;
 		case T_METHOD_C:
-			if ((op_array && !op_array->scope && op_array->function_name) || (op_array->fn_flags & ZEND_ACC_CLOSURE)) {
-				ZVAL_STR_COPY(zv, op_array->function_name);
-			} else if (ce) {
-				if (op_array && op_array->function_name) {
-					ZVAL_NEW_STR(zv, zend_concat3(ZSTR_VAL(ce->name), ZSTR_LEN(ce->name), "::", 2,
-						ZSTR_VAL(op_array->function_name), ZSTR_LEN(op_array->function_name)));
-				} else {
-					ZVAL_STR_COPY(zv, ce->name);
-				}
-			} else if (op_array && op_array->function_name) {
+			if (has_function_name && op_array->scope && op_array->scope->name) {
+				ZVAL_NEW_STR(zv, zend_concat3(ZSTR_VAL(op_array->scope->name), ZSTR_LEN(op_array->scope->name), "::", 2,
+					ZSTR_VAL(op_array->function_name), ZSTR_LEN(op_array->function_name)));
+			} else if (has_function_name && (op_array->fn_flags & ZEND_ACC_CLOSURE || !op_array->scope)) {
 				ZVAL_STR_COPY(zv, op_array->function_name);
 			} else {
 				ZVAL_EMPTY_STRING(zv);
