@@ -1591,6 +1591,8 @@ simple_list:
 			APPEND_NODE_1("break");
 		case ZEND_AST_CONTINUE:
 			APPEND_NODE_1("continue");
+		case ZEND_AST_TYPED_ARRAY:
+			POSTFIX_OP("[]", 240, 241);
 
 		/* 2 child nodes */
 		case ZEND_AST_DIM:

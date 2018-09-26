@@ -5382,6 +5382,12 @@ static void zend_compile_typename(zend_ast *ast, zend_arg_info *arg_info, zend_b
 {
 	if (ast->kind == ZEND_AST_TYPE) {
 		arg_info->type = ZEND_TYPE_ENCODE(ast->attr, allow_null);
+	} else if (ast->kind == ZEND_AST_TYPED_ARRAY) {
+		if (UNEXPECTED(ast->child[0]->kind == ZEND_AST_TYPED_ARRAY)) {
+			zend_error_noreturn(E_COMPILE_ERROR,
+					"Multi-dimensional typed arrays are disallowed");
+		}
+		zend_compile_typename(ast->child[0], arg_info, allow_null);
 	} else {
 		zend_string *class_name = zend_ast_get_str(ast);
 		zend_uchar type = zend_lookup_builtin_type_by_name(class_name);

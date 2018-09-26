@@ -658,9 +658,10 @@ type_expr:
 ;
 
 type:
-		T_ARRAY		{ $$ = zend_ast_create_ex(ZEND_AST_TYPE, IS_ARRAY); }
-	|	T_CALLABLE	{ $$ = zend_ast_create_ex(ZEND_AST_TYPE, IS_CALLABLE); }
-	|	name		{ $$ = $1; }
+		T_ARRAY			{ $$ = zend_ast_create_ex(ZEND_AST_TYPE, IS_ARRAY); }
+	|	T_CALLABLE		{ $$ = zend_ast_create_ex(ZEND_AST_TYPE, IS_CALLABLE); }
+	|	name			{ $$ = $1; }
+	|	type '[' ']'	{ $$ = zend_ast_create(ZEND_AST_TYPED_ARRAY, $1); }
 ;
 
 return_type:
