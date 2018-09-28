@@ -2254,8 +2254,14 @@ ZEND_API int zend_register_functions(zend_class_entry *scope, const zend_functio
 				internal_function->num_args--;
 			}
 			if (ZEND_TYPE_IS_SET(info->type)) {
-				if (ZEND_TYPE_IS_CLASS(info->type)) {
-					const char *type_name = (const char*)info->type;
+				if (ZEND_TYPE_IS_CLASS(info->type) || ZEND_TYPE_IS_ARRAY(info->type)) {
+					const char *type_name;
+
+					if (ZEND_TYPE_IS_ARRAY(info->type)) {
+						type_name = (const char*)(ZEND_TYPE_ARRAY(info->type)->type);
+					} else {
+						type_name = (const char*)info->type;
+					}
 
 					if (type_name[0] == '?') {
 						type_name++;

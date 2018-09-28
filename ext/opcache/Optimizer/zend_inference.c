@@ -2296,8 +2296,8 @@ static uint32_t zend_fetch_prop_type_info(const zend_op_array *op_array, zend_ss
 	}
 
 	if (prop_info && ZEND_TYPE_IS_SET(prop_info->type)) {
-		uint32_t type = ZEND_TYPE_IS_CLASS(prop_info->type)
-			? MAY_BE_OBJECT
+		uint32_t type = (ZEND_TYPE_IS_CLASS(prop_info->type) || ZEND_TYPE_IS_ARRAY(prop_info->type))
+			? (MAY_BE_OBJECT | MAY_BE_ARRAY)
 			: zend_convert_type_code_to_may_be(ZEND_TYPE_CODE(prop_info->type));
 
 		if (ZEND_TYPE_ALLOW_NULL(prop_info->type)) {

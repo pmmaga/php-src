@@ -2235,7 +2235,8 @@ static void zend_emit_return_type_check(
 			opline->result_type = expr->op_type = IS_TMP_VAR;
 			opline->result.var = expr->u.op.var = get_temporary_variable(CG(active_op_array));
 		}
-		if (ZEND_TYPE_IS_CLASS(return_info->type)) {
+		if (ZEND_TYPE_IS_CLASS(return_info->type) ||
+			(ZEND_TYPE_IS_ARRAY(return_info->type) && ZEND_TYPE_IS_CLASS(ZEND_TYPE_ARRAY(return_info->type)->type))) {
 			opline->op2.num = CG(active_op_array)->cache_size;
 			CG(active_op_array)->cache_size += sizeof(void*);
 		} else {
@@ -5392,7 +5393,7 @@ static void zend_compile_typename(zend_ast *ast, zend_type *type_info, zend_bool
 
 		array_type = emalloc(sizeof(zend_array_type));
 		array_type->array = ZEND_TYPED_ARRAY;
-		zend_compile_typename(ast->child[0], &array_type->type, allow_null);
+		zend_compile_typename(ast->child[0], &array_type->type, 0);
 		*type_info = ZEND_TYPE_ENCODE_ARRAY(array_type, allow_null);
 	} else {
 		zend_string *class_name = zend_ast_get_str(ast);

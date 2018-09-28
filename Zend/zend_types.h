@@ -146,7 +146,7 @@ typedef struct _zend_array_type {
 	(ZEND_TYPE_IS_CLASS(t) && !ZEND_TYPE_IS_CE(t))
 
 #define ZEND_TYPE_IS_ARRAY(t) \
-	((((t) & Z_L(0x2)) != 0) && (ZEND_TYPE_ARRAY(t)->type == ZEND_TYPED_ARRAY))
+	((((t) & Z_L(0x2)) != 0) && (ZEND_TYPE_CE(t)->type == ZEND_TYPED_ARRAY))
 
 #define ZEND_TYPE_NAME(t) \
 	((zend_string*)((t) & ~Z_L(0x3)))
