@@ -110,9 +110,11 @@ typedef void (*copy_ctor_func_t)(zval *pElement);
  * ZEND_TYPE_IS_CLASS()   - checks if type-hint refer to some class
  * ZEND_TYPE_IS_CE()      - checks if type-hint refer to some class by zend_class_entry *
  * ZEND_TYPE_IS_NAME()    - checks if type-hint refer to some class by zend_string *
+ * ZEND_TYPE_IS_ARRAY()   - checks if type-hint refer to some typed array by zend_array_type *
  *
  * ZEND_TYPE_NAME()       - returns referenced class name
  * ZEND_TYPE_CE()         - returns referenced class entry
+ * ZEND_TYPE_ARRAY()      - returns referenced array type
  * ZEND_TYPE_CODE()       - returns standard type code (e.g. IS_LONG, _IS_BOOL)
  *
  * ZEND_TYPE_ALLOW_NULL() - checks if NULL is allowed
@@ -144,13 +146,16 @@ typedef struct _zend_array_type {
 	(ZEND_TYPE_IS_CLASS(t) && !ZEND_TYPE_IS_CE(t))
 
 #define ZEND_TYPE_IS_ARRAY(t) \
-	((((t) & Z_L(0x2)) != 0) && (ZEND_TYPE_CE(t)->type == ZEND_TYPED_ARRAY))
+	((((t) & Z_L(0x2)) != 0) && (ZEND_TYPE_ARRAY(t)->type == ZEND_TYPED_ARRAY))
 
 #define ZEND_TYPE_NAME(t) \
 	((zend_string*)((t) & ~Z_L(0x3)))
 
 #define ZEND_TYPE_CE(t) \
 	((zend_class_entry*)((t) & ~Z_L(0x3)))
+
+#define ZEND_TYPE_ARRAY(t) \
+	((zend_array_type*)((t) & ~Z_L(0x3)))
 
 #define ZEND_TYPE_CODE(t) \
 	((t) >> Z_L(2))

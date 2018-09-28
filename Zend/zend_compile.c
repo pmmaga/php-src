@@ -5394,7 +5394,6 @@ static void zend_compile_typename(zend_ast *ast, zend_type *type_info, zend_bool
 		array_type->array = ZEND_TYPED_ARRAY;
 		zend_compile_typename(ast->child[0], &array_type->type, allow_null);
 		*type_info = ZEND_TYPE_ENCODE_ARRAY(array_type, allow_null);
-		ZEND_ASSERT(ZEND_TYPE_IS_ARRAY(*type_info) == 1);
 	} else {
 		zend_string *class_name = zend_ast_get_str(ast);
 		zend_uchar type = zend_lookup_builtin_type_by_name(class_name);
