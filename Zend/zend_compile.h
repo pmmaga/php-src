@@ -869,6 +869,8 @@ void zend_assert_valid_class_name(const zend_string *const_name);
 #define ZEND_INTERNAL_CLASS         1
 #define ZEND_USER_CLASS             2
 
+#define ZEND_TYPED_ARRAY			3
+
 #define ZEND_EVAL				(1<<0)
 #define ZEND_INCLUDE			(1<<1)
 #define ZEND_INCLUDE_ONCE		(1<<2)

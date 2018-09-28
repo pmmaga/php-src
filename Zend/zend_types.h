@@ -123,6 +123,11 @@ typedef void (*copy_ctor_func_t)(zval *pElement);
 
 typedef uintptr_t zend_type;
 
+typedef struct _zend_array_type {
+	char array;		/* To distinguish from zend_class_entry */
+	zend_type type;
+} zend_array_type;
+
 #define ZEND_TYPE_IS_SET(t) \
 	((t) > Z_L(0x3))
 
@@ -130,13 +135,16 @@ typedef uintptr_t zend_type;
 	(((t) > Z_L(0x3)) && ((t) <= Z_L(0x3ff)))
 
 #define ZEND_TYPE_IS_CLASS(t) \
-	((t) > Z_L(0x3ff))
+	((t) > Z_L(0x3ff) && !ZEND_TYPE_IS_ARRAY(t))
 
 #define ZEND_TYPE_IS_CE(t) \
-	(((t) & Z_L(0x2)) != 0)
+	((((t) & Z_L(0x2)) != 0) && (ZEND_TYPE_CE(t)->type != ZEND_TYPED_ARRAY))
 
 #define ZEND_TYPE_IS_NAME(t) \
 	(ZEND_TYPE_IS_CLASS(t) && !ZEND_TYPE_IS_CE(t))
+
+#define ZEND_TYPE_IS_ARRAY(t) \
+	((((t) & Z_L(0x2)) != 0) && (ZEND_TYPE_CE(t)->type == ZEND_TYPED_ARRAY))
 
 #define ZEND_TYPE_NAME(t) \
 	((zend_string*)((t) & ~Z_L(0x3)))
@@ -161,6 +169,9 @@ typedef uintptr_t zend_type;
 
 #define ZEND_TYPE_ENCODE_CLASS(class_name, allow_null) \
 	(((uintptr_t)(class_name)) | ((allow_null) ? Z_L(0x1) : Z_L(0x0)))
+
+#define ZEND_TYPE_ENCODE_ARRAY(type, allow_null) \
+	ZEND_TYPE_ENCODE_CE(type, allow_null)
 
 #define ZEND_TYPE_ENCODE_CLASS_CONST_0(class_name) \
 	((zend_type) class_name)
