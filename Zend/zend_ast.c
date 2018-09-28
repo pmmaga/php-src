@@ -1592,7 +1592,9 @@ simple_list:
 		case ZEND_AST_CONTINUE:
 			APPEND_NODE_1("continue");
 		case ZEND_AST_TYPED_ARRAY:
-			POSTFIX_OP("[]", 240, 241);
+			zend_ast_export_name(str, ast->child[0], 0, indent);
+			smart_str_appends(str, "[]");
+			break;
 
 		/* 2 child nodes */
 		case ZEND_AST_DIM:
