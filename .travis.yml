@@ -9,7 +9,7 @@ os:
 language: c
 sudo: required
 addons:
-  apt:
+  - apt:
     packages:
       - locales
       - language-pack-de
@@ -24,7 +24,7 @@ addons:
       - libsasl2-dev
       - libxpm-dev
       - libt1-dev
-  homebrew:
+  - homebrew:
     packages:
       - re2c
       - libicu-dev
