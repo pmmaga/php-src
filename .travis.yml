@@ -41,6 +41,7 @@ addons:
   homebrew:
     packages:
       - ccache
+      - bison
       - re2c
       - mysql
       - postgresql
