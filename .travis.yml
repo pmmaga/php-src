@@ -1,7 +1,11 @@
 git:
   quiet: true
 
-dist: trusty
+os:
+  - linux
+    dist: trusty
+  - osx
+
 language: c
 sudo: required
 addons:
@@ -20,6 +24,10 @@ addons:
       - libsasl2-dev
       - libxpm-dev
       - libt1-dev
+  homebrew:
+    packages:
+      - re2c
+      - libicu-dev
 
 notifications:
     email:
@@ -34,6 +42,7 @@ notifications:
 
 cache:
     apt: true
+    homebrew: true
     ccache: true
 
 env:
