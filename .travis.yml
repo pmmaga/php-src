@@ -4,30 +4,32 @@ git:
 os:
   - linux
     dist: trusty
+    addons:
+      apt:
+        packages:
+          - locales
+          - language-pack-de
+          - re2c
+          - libgmp-dev
+          - libicu-dev
+          - libtidy-dev
+          - libenchant-dev
+          - libaspell-dev
+          - libpspell-dev
+          - librecode-dev
+          - libsasl2-dev
+          - libxpm-dev
+          - libt1-dev
   - osx
+    addons:
+      homebrew:
+        packages:
+          - ccache
+          - re2c
+          - libicu-dev
 
 language: c
 sudo: required
-addons:
-  - apt:
-    packages:
-      - locales
-      - language-pack-de
-      - re2c
-      - libgmp-dev
-      - libicu-dev
-      - libtidy-dev
-      - libenchant-dev
-      - libaspell-dev
-      - libpspell-dev
-      - librecode-dev
-      - libsasl2-dev
-      - libxpm-dev
-      - libt1-dev
-  - homebrew:
-    packages:
-      - re2c
-      - libicu-dev
 
 notifications:
     email:
