@@ -23,6 +23,12 @@ else
 	MAKE_QUIET=""
 fi
 
+if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+	OPENSSL_WITH_DIR="--with-openssl-dir=/usr/local/opt/openssl/include"
+else
+	OPENSSL_WITH_DIR=""
+fi
+
 MAKE_JOBS=${MAKE_JOBS:-2}
 
 ./buildconf --force
@@ -63,7 +69,8 @@ $TS \
 --with-gettext \
 --enable-sockets \
 --with-bz2 \
---with-openssl-dir=/usr/local/opt/openssl/include \
+--with-openssl \
+$OPENSSL_WITH_DIR \
 --with-gmp \
 --enable-bcmath \
 --enable-calendar \

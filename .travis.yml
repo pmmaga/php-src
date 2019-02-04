@@ -3,10 +3,10 @@ git:
 
 matrix:
   include:
-    # - os: linux
-    #   dist: trusty
-    #   compiler: gcc
-    #   env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0
+    - os: linux
+      dist: trusty
+      compiler: gcc
+      env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0
     # - os: linux
     #   dist: trusty
     #   compiler: gcc
@@ -47,6 +47,7 @@ addons:
       - openssl
       - mysql
       - postgresql
+      - enchant
 
 # notifications:
 #     email:
