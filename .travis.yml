@@ -43,7 +43,7 @@ addons:
       - ccache
       - bison
       - re2c
-      - openssl
+      - libressl
       - mysql
       - postgresql
 
@@ -73,8 +73,10 @@ env:
 
 before_script:
     # Setup for osx
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/bison/bin:/usr/local/opt/ccache/libexec:/usr/local/opt/openssl/lib:$PATH"; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/bison/bin:/usr/local/opt/ccache/libexec:$PATH"; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start mysql; fi
+    - brew info openssl
+    - brew info libressl
     # Setup ccache
     - ccache --version
     - ccache --zero-stats
