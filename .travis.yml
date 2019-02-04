@@ -6,9 +6,19 @@ matrix:
     - os: linux
       dist: trusty
       compiler: gcc
+      env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0
+    - os: linux
+      dist: trusty
+      compiler: gcc
+      env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1
     - os: osx
       osx_image: xcode9.4
       compiler: clang
+      env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0
+    - os: osx
+      osx_image: xcode9.4
+      compiler: clang
+      env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1
 
 language: c
 sudo: required
@@ -58,9 +68,6 @@ env:
       - PDO_MYSQL_TEST_PASS=
       - PDO_MYSQL_TEST_HOST=127.0.0.1
       - REPORT_EXIT_STATUS=1
-    matrix:
-      - ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0
-      - ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1
 
 before_script:
     - ccache --version
