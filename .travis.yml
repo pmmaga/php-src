@@ -71,6 +71,7 @@ env:
       - PDO_MYSQL_TEST_USER=root
       - PDO_MYSQL_TEST_PASS=
       - PDO_MYSQL_TEST_HOST=127.0.0.1
+      - PGSQL_TEST_USER=root
       - REPORT_EXIT_STATUS=1
 
 before_script:
@@ -78,6 +79,7 @@ before_script:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/bison/bin:/usr/local/opt/ccache/libexec:$PATH"; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start mysql; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start postgresql; fi
+    - brew info enchant
     # Setup ccache
     - ccache --version
     - ccache --zero-stats

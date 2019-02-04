@@ -25,8 +25,10 @@ fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
 	WITH_OPENSSL="--with-openssl-dir=/usr/local/opt/openssl/include"
+	WITH_ENCHANT="--with-enchant=/usr/local/opt/enchant/include"
 else
 	WITH_OPENSSL="--with-openssl"
+	WITH_ENCHANT="--with-enchant=/usr"
 fi
 
 MAKE_JOBS=${MAKE_JOBS:-2}
@@ -75,7 +77,7 @@ $WITH_OPENSSL \
 --enable-calendar \
 --enable-ftp \
 --with-pspell=/usr \
---with-enchant=/usr \
+$WITH_ENCHANT \
 --enable-wddx \
 --with-freetype-dir=/usr \
 --with-xpm-dir=/usr \
