@@ -63,7 +63,7 @@ $TS \
 --with-gettext \
 --enable-sockets \
 --with-bz2 \
---with-openssl=/usr \
+--with-openssl \
 --with-gmp \
 --enable-bcmath \
 --enable-calendar \
