@@ -24,9 +24,9 @@ else
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-	OPENSSL_WITH_DIR="--with-openssl-dir=/usr/local/opt/openssl/include"
+	WITH_OPENSSL="--with-openssl-dir=/usr/local/opt/openssl/include"
 else
-	OPENSSL_WITH_DIR=""
+	WITH_OPENSSL="--with-openssl"
 fi
 
 MAKE_JOBS=${MAKE_JOBS:-2}
@@ -69,8 +69,7 @@ $TS \
 --with-gettext \
 --enable-sockets \
 --with-bz2 \
---with-openssl \
-$OPENSSL_WITH_DIR \
+$WITH_OPENSSL \
 --with-gmp \
 --enable-bcmath \
 --enable-calendar \
