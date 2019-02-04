@@ -41,7 +41,7 @@ addons:
   homebrew:
     packages:
       - ccache
-      - bison@2.7
+      - bison
       - re2c
       - mysql
       - postgresql
@@ -71,6 +71,10 @@ env:
       - REPORT_EXIT_STATUS=1
 
 before_script:
+    # Setup for osx
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo sh -c 'export PATH="/usr/local/opt/bison@2.7/bin:/usr/local/opt/ccache/libexec:$PATH"'; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo sh -c 'mysql.server start'; fi
+    # Setup ccache
     - ccache --version
     - ccache --zero-stats
     - export USE_CCACHE=1
