@@ -18,7 +18,7 @@ matrix:
     - os: osx
       osx_image: xcode9.4
       compiler: clang
-      env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1 EXTRA_CFLAGS=-I/usr/local/opt/openssl/include
+      env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1 EXTRA_CFLAGS=-I/usr/local/opt/openssl/include EXTRA_LDFLAGS=-L/usr/local/opt/openssl/lib PKG_CONFIG_PATH=/usr/local/opt/openssl/lib/pkgconfig
 
 language: c
 sudo: required
@@ -74,7 +74,7 @@ env:
 before_script:
     # Setup for osx
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/bison/bin:/usr/local/opt/ccache/libexec:$PATH"; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start mysql; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start mysql postgresql; fi
     # Setup ccache
     - ccache --version
     - ccache --zero-stats
