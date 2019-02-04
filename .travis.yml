@@ -3,14 +3,14 @@ git:
 
 matrix:
   include:
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1
+    # - os: linux
+    #   dist: trusty
+    #   compiler: gcc
+    #   env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0
+    # - os: linux
+    #   dist: trusty
+    #   compiler: gcc
+    #   env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1
     - os: osx
       osx_image: xcode9.4
       compiler: clang
@@ -72,8 +72,8 @@ env:
 
 before_script:
     # Setup for osx
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo sh -c 'export PATH="/usr/local/opt/bison@2.7/bin:/usr/local/opt/ccache/libexec:$PATH"'; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo sh -c 'mysql.server start'; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/bison/bin:/usr/local/opt/ccache/libexec:$PATH"; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start mysql; fi
     # Setup ccache
     - ccache --version
     - ccache --zero-stats
