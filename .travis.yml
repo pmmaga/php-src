@@ -1,10 +1,12 @@
 git:
   quiet: true
 
-os:
-  - linux
-    dist: trusty
-  - osx
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+    - os: osx
+      osx_image: xcode9.4
 
 language: c
 sudo: required
@@ -28,7 +30,6 @@ addons:
     packages:
       - ccache
       - re2c
-      - libicu-dev
 
 notifications:
     email:
@@ -42,8 +43,6 @@ notifications:
       on_failure: always
 
 cache:
-    apt: true
-    homebrew: true
     ccache: true
 
 env:
