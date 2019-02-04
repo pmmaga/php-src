@@ -1,12 +1,12 @@
 git:
   quiet: true
 
-matrix:
-  include:
-    - os: linux
-      dist: trusty
-    - os: osx
-      osx_image: xcode9.4
+os:
+  - linux
+  - osx
+
+dist: trusty
+osx_image: xcode9.4
 
 language: c
 sudo: required
@@ -31,16 +31,16 @@ addons:
       - ccache
       - re2c
 
-notifications:
-    email:
-       on_failure: change
-    irc:
-      template:
-        - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message} -  Change view : %{compare_url} - Build details : %{build_url}"
-      channels:
-        - "irc.efnet.org#php.pecl"
-      on_success: change
-      on_failure: always
+# notifications:
+#     email:
+#        on_failure: change
+#     irc:
+#       template:
+#         - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message} -  Change view : %{compare_url} - Build details : %{build_url}"
+#       channels:
+#         - "irc.efnet.org#php.pecl"
+#       on_success: change
+#       on_failure: always
 
 cache:
     ccache: true
@@ -63,7 +63,7 @@ before_script:
     - ccache --zero-stats
     - export USE_CCACHE=1
     # Enable IPv6
-    - sudo sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6'
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6; fi'
     # Compile PHP
     - ./travis/compile.sh
     # Setup Extensions
