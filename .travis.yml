@@ -22,7 +22,7 @@ matrix:
     - os: osx
       osx_image: xcode9.4
       compiler: clang
-      env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1 ENABLE_OPCACHE=0
+      env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1 ENABLE_OPCACHE=0 CFLAGS=-Wno-nullability-completeness
 
 language: c
 sudo: required
