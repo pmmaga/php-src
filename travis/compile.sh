@@ -24,13 +24,11 @@ else
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-	WITH_OPENSSL="--with-openssl-dir=/usr/local/opt/openssl/include"
+	WITH_OPENSSL="--with-openssl"
 	WITH_ENCHANT=""
-	WITH_KERBEROS=""
 else
 	WITH_OPENSSL="--with-openssl"
 	WITH_ENCHANT="--with-enchant=/usr"
-	WITH_KERBEROS="--with-kerberos"
 fi
 
 MAKE_JOBS=${MAKE_JOBS:-2}
@@ -83,7 +81,7 @@ $WITH_ENCHANT \
 --enable-wddx \
 --with-freetype-dir=/usr \
 --with-xpm-dir=/usr \
-$WITH_KERBEROS \
+--with-kerberos \
 --enable-sysvmsg \
 --enable-zend-test \
 > "$CONFIG_LOG_FILE"
