@@ -49,6 +49,7 @@ addons:
       - postgresql
       - enchant
       - freetype
+      - gettext
 
 # notifications:
 #     email:
