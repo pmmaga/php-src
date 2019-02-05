@@ -24,8 +24,10 @@ else
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+	WITH_GETTEXT="--with-gettext=/usr/local/opt/gettext"
 	WITH_ENCHANT=""
 else
+	WITH_GETTEXT="--with-gettext"
 	WITH_ENCHANT="--with-enchant=/usr"
 fi
 
@@ -66,7 +68,7 @@ $TS \
 --with-readline \
 --enable-mbstring \
 --with-curl \
---with-gettext \
+$WITH_GETTEXT \
 --enable-sockets \
 --with-bz2 \
 --with-openssl \
