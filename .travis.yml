@@ -77,8 +77,8 @@ before_script:
     # Setup for osx
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/bison/bin:/usr/local/opt/ccache/libexec:$PATH"; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start mysql; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then createuser -s postgres; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start postgresql; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then createuser -s postgres; fi
     # Setup ccache
     - ccache --version
     - ccache --zero-stats
