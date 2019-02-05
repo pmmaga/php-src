@@ -25,7 +25,7 @@ fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
 	WITH_OPENSSL="--with-openssl-dir=/usr/local/opt/openssl/include"
-	WITH_ENCHANT="--with-enchant=/opt/local"
+	WITH_ENCHANT=""
 else
 	WITH_OPENSSL="--with-openssl"
 	WITH_ENCHANT="--with-enchant=/usr"
