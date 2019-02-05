@@ -22,7 +22,7 @@ matrix:
     - os: osx
       osx_image: xcode9.4
       compiler: clang
-      env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1 ENABLE_OPCACHE=0 CFLAGS=-Wno-nullability-completeness
+      env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1 ENABLE_OPCACHE=0
 
 language: c
 sudo: required
@@ -89,6 +89,7 @@ before_script:
     # Setup for osx
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/bison/bin:/usr/local/opt/ccache/libexec:$PATH"; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig:/usr/local/opt/libedit/lib/pkgconfig:/usr/local/opt/zlib/lib/pkgconfig"; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export CFLAGS="-Wno-nullability-completeness"; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew link icu4c gettext --force; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start mysql; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start postgresql; fi

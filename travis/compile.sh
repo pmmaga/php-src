@@ -28,11 +28,13 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
 	WITH_ENCHANT=""
 	WITH_PSPELL=""
 	WITH_READLINE="--with-libedit"
+	WITH_XPM=""
 else
 	WITH_GETTEXT="--with-gettext"
 	WITH_ENCHANT="--with-enchant=/usr"
 	WITH_PSPELL="--with-pspell=/usr"
 	WITH_READLINE="--with-readline"
+	WITH_XPM="--with-xpm-dir=/usr"
 fi
 
 MAKE_JOBS=${MAKE_JOBS:-2}
@@ -84,7 +86,7 @@ $WITH_PSPELL \
 $WITH_ENCHANT \
 --enable-wddx \
 --with-freetype-dir=/usr \
---with-xpm-dir=/usr \
+$WITH_XPM \
 --with-kerberos \
 --enable-sysvmsg \
 --enable-zend-test \
