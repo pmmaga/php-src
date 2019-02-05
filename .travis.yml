@@ -3,10 +3,10 @@ git:
 
 matrix:
   include:
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0
+    # - os: linux
+    #   dist: trusty
+    #   compiler: gcc
+    #   env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0
     # - os: linux
     #   dist: trusty
     #   compiler: gcc
@@ -18,7 +18,7 @@ matrix:
     - os: osx
       osx_image: xcode9.4
       compiler: clang
-      env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1
+      env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1 CONFIG_LOG_FILE=1
 
 language: c
 sudo: required
@@ -50,6 +50,7 @@ addons:
       - enchant
       - freetype
       - gettext
+      - icu4c
 
 # notifications:
 #     email:
