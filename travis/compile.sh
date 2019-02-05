@@ -24,10 +24,8 @@ else
 fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-	WITH_OPENSSL="--with-openssl"
 	WITH_ENCHANT=""
 else
-	WITH_OPENSSL="--with-openssl"
 	WITH_ENCHANT="--with-enchant=/usr"
 fi
 
@@ -71,7 +69,7 @@ $TS \
 --with-gettext \
 --enable-sockets \
 --with-bz2 \
-$WITH_OPENSSL \
+--with-openssl \
 --with-gmp \
 --enable-bcmath \
 --enable-calendar \
