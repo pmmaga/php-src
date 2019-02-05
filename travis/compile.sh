@@ -26,9 +26,11 @@ fi
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
 	WITH_GETTEXT="--with-gettext=/usr/local/opt/gettext"
 	WITH_ENCHANT=""
+	WITH_PSPELL=""
 else
 	WITH_GETTEXT="--with-gettext"
 	WITH_ENCHANT="--with-enchant=/usr"
+	WITH_PSPELL="--with-pspell=/usr"
 fi
 
 MAKE_JOBS=${MAKE_JOBS:-2}
@@ -76,7 +78,7 @@ $WITH_GETTEXT \
 --enable-bcmath \
 --enable-calendar \
 --enable-ftp \
---with-pspell=/usr \
+$WITH_PSPELL \
 $WITH_ENCHANT \
 --enable-wddx \
 --with-freetype-dir=/usr \
