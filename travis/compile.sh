@@ -27,10 +27,12 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
 	WITH_GETTEXT="--with-gettext=/usr/local/opt/gettext"
 	WITH_ENCHANT=""
 	WITH_PSPELL=""
+	WITH_READLINE="--with-libedit"
 else
 	WITH_GETTEXT="--with-gettext"
 	WITH_ENCHANT="--with-enchant=/usr"
 	WITH_PSPELL="--with-pspell=/usr"
+	WITH_READLINE="--with-readline"
 fi
 
 MAKE_JOBS=${MAKE_JOBS:-2}
@@ -67,7 +69,7 @@ $TS \
 --enable-sysvshm \
 --enable-shmop \
 --enable-pcntl \
---with-readline \
+$WITH_READLINE \
 --enable-mbstring \
 --with-curl \
 $WITH_GETTEXT \

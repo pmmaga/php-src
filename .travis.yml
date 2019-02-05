@@ -3,22 +3,30 @@ git:
 
 matrix:
   include:
+    - os: linux
+      dist: trusty
+      compiler: gcc
+      env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0 ENABLE_OPCACHE=1 EXTRA_CFLAGS="-m32"
     # - os: linux
     #   dist: trusty
     #   compiler: gcc
-    #   env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0
+    #   env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0 ENABLE_OPCACHE=1
     # - os: linux
     #   dist: trusty
     #   compiler: gcc
-    #   env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1
+    #   env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0 ENABLE_OPCACHE=0
+    # - os: linux
+    #   dist: trusty
+    #   compiler: gcc
+    #   env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1 ENABLE_OPCACHE=0
     # - os: osx
     #   osx_image: xcode9.4
     #   compiler: clang
-    #   env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0
+    #   env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0 ENABLE_OPCACHE=1
     - os: osx
       osx_image: xcode9.4
       compiler: clang
-      env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1 CONFIG_LOG_FILE=1
+      env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1 ENABLE_OPCACHE=0
 
 language: c
 sudo: required
@@ -84,7 +92,7 @@ env:
 before_script:
     # Setup for osx
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/bison/bin:/usr/local/opt/ccache/libexec:$PATH"; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig:/usr/local/opt/libedit/lib/pkgconfig"; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig:/usr/local/opt/libedit/lib/pkgconfig:/usr/local/opt/zlib/lib/pkgconfig"; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew link icu4c gettext --force; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start mysql; fi
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start postgresql; fi
@@ -105,7 +113,7 @@ before_script:
 
 # Run PHPs run-tests.php
 script:
-    - ./sapi/cli/php run-tests.php -p `pwd`/sapi/cli/php $(if [ $ENABLE_DEBUG == 0 ]; then echo "-d opcache.enable_cli=1 -d zend_extension=`pwd`/modules/opcache.so"; fi) -g "FAIL,XFAIL,BORK,WARN,LEAK,SKIP" --offline --show-diff --show-slow 1000 --set-timeout 120
+    - ./sapi/cli/php run-tests.php -P $(if [ $ENABLE_OPCACHE == 1 ]; then echo "-d opcache.enable_cli=1 -d zend_extension=`pwd`/modules/opcache.so"; fi) -g "FAIL,XFAIL,BORK,WARN,LEAK,SKIP" --offline --show-diff --show-slow 1000 --set-timeout 120
 
 after_success:
     - ccache --show-stats
