@@ -25,15 +25,19 @@ fi
 
 if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
 	WITH_GETTEXT="--with-gettext=/usr/local/opt/gettext"
+	WITH_READLINE="--with-libedit"
+
+	ENABLE_INTL=""
 	WITH_ENCHANT=""
 	WITH_PSPELL=""
-	WITH_READLINE="--with-libedit"
 	WITH_XPM=""
 else
 	WITH_GETTEXT="--with-gettext"
+	WITH_READLINE="--with-readline"
+
+	ENABLE_INTL=""
 	WITH_ENCHANT="--with-enchant=/usr"
 	WITH_PSPELL="--with-pspell=/usr"
-	WITH_READLINE="--with-readline"
 	WITH_XPM="--with-xpm-dir=/usr"
 fi
 
@@ -52,7 +56,7 @@ $TS \
 --with-pgsql \
 --with-pdo-pgsql \
 --with-pdo-sqlite \
---enable-intl \
+$ENABLE_INTL \
 --without-pear \
 --with-gd \
 --with-jpeg-dir=/usr \

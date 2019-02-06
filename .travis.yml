@@ -87,7 +87,7 @@ env:
 
 before_script:
     # Setup OS
-    - source ./travis/os/$TRAVIS_OS_NAME.sh
+    - ./travis/os/$TRAVIS_OS_NAME.sh
     # Setup ccache
     - ccache --version
     - ccache --zero-stats
