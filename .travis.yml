@@ -3,26 +3,32 @@ git:
 
 matrix:
   include:
-    # - os: linux
-    #   dist: trusty
-    #   compiler: gcc
-    #   env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0 ENABLE_OPCACHE=1
-    # - os: linux
-    #   dist: trusty
-    #   compiler: gcc
-    #   env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0 ENABLE_OPCACHE=0
-    # - os: linux
-    #   dist: trusty
-    #   compiler: gcc
-    #   env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1 ENABLE_OPCACHE=0
-    # - os: osx
-    #   osx_image: xcode9.4
-    #   compiler: clang
-    #   env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0 ENABLE_OPCACHE=1
+    - os: linux
+      dist: trusty
+      compiler: gcc
+      env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0 ENABLE_OPCACHE=1 CFLAGS="-m32" CXXFLAGS="-m32"
+    - os: linux
+      dist: trusty
+      compiler: gcc
+      env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0 ENABLE_OPCACHE=1
+    - os: linux
+      dist: trusty
+      compiler: gcc
+      env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0 ENABLE_OPCACHE=0
+    - os: linux
+      dist: trusty
+      compiler: gcc
+      env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1 ENABLE_OPCACHE=0
+    - os: osx
+      osx_image: xcode9.4
+      compiler: clang
+      env: ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0 ENABLE_OPCACHE=1
     - os: osx
       osx_image: xcode9.4
       compiler: clang
       env: ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1 ENABLE_OPCACHE=0
+  allow_failures:
+    - os: osx
 
 language: c
 sudo: required
