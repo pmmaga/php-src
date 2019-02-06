@@ -86,19 +86,12 @@ env:
       - REPORT_EXIT_STATUS=1
 
 before_script:
-    # Setup for osx
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/bison/bin:/usr/local/opt/ccache/libexec:$PATH"; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig:/usr/local/opt/libedit/lib/pkgconfig:/usr/local/opt/zlib/lib/pkgconfig"; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export CFLAGS="-Wno-nullability-completeness"; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew link icu4c gettext --force; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start mysql; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew services start postgresql; fi
+    # Setup OS
+    - source ./travis/os/$TRAVIS_OS_NAME.sh
     # Setup ccache
     - ccache --version
     - ccache --zero-stats
     - export USE_CCACHE=1
-    # Enable IPv6
-    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo sh -c 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6'; fi
     # Compile PHP
     - ./travis/compile.sh
     # Setup Extensions
