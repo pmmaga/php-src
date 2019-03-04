@@ -58,6 +58,7 @@ addons:
       - zlib
       - t1lib
       - gd
+      - oniguruma
 
 services:
   - mysql
