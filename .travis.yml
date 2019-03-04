@@ -59,6 +59,7 @@ addons:
       - t1lib
       - gd
       - oniguruma
+      - libzip
 
 services:
   - mysql
