@@ -120,6 +120,7 @@ NO_PROC_OPEN_ERROR;
 	set_time_limit(0);
 
 	ini_set('pcre.backtrack_limit', PHP_INT_MAX);
+	ini_set('pcre.jit', false);
 
 	// delete as much output buffers as possible
 	while (@ob_end_clean()) {
