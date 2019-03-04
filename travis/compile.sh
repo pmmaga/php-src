@@ -31,6 +31,7 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
 	WITH_ENCHANT=""
 	WITH_PSPELL=""
 	WITH_XPM=""
+	WITH_PCRE_JIT="--without-pcre-jit"
 else
 	WITH_GETTEXT="--with-gettext"
 	WITH_READLINE="--with-readline"
@@ -39,6 +40,7 @@ else
 	WITH_ENCHANT="--with-enchant=/usr"
 	WITH_PSPELL="--with-pspell=/usr"
 	WITH_XPM="--with-xpm-dir=/usr"
+	WITH_PCRE_JIT=""
 fi
 
 MAKE_JOBS=${MAKE_JOBS:-2}
@@ -93,6 +95,7 @@ $WITH_ENCHANT \
 --with-kerberos \
 --enable-sysvmsg \
 --enable-zend-test \
+$WITH_PCRE_JIT \
 > "$CONFIG_LOG_FILE"
 
 make "-j${MAKE_JOBS}" $MAKE_QUIET > "$MAKE_LOG_FILE"

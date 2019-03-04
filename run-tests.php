@@ -278,7 +278,6 @@ NO_PROC_OPEN_ERROR;
 		'opcache.fast_shutdown=0',
 		'opcache.file_update_protection=0',
 		'zend.assertions=1',
-		'pcre.jit=0',
 	);
 
 	$no_file_cache = '-d opcache.file_cache= -d opcache.file_cache_only=0';
