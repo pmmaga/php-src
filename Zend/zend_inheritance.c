@@ -1490,24 +1490,38 @@ static void zend_traits_copy_functions(zend_string *fnname, zend_function *fn, z
 				&& (!aliases[i] || fn->common.scope == aliases[i])
 				&& ZSTR_LEN(alias->trait_method.method_name) == ZSTR_LEN(fnname)
 				&& (zend_binary_strcasecmp(ZSTR_VAL(alias->trait_method.method_name), ZSTR_LEN(alias->trait_method.method_name), ZSTR_VAL(fnname), ZSTR_LEN(fnname)) == 0)) {
-				fn_copy = *fn;
 
-				/* if it is 0, no modifieres has been changed */
-				if (alias->modifiers) {
-					fn_copy.common.fn_flags = alias->modifiers | (fn->common.fn_flags ^ (fn->common.fn_flags & ZEND_ACC_PPP_MASK));
+				if (!alias->trait_method.class_name && alias->trait_method.trait_names) {
+					uint32_t j = 0;
+					while (alias->trait_method.trait_names[j]) {
+						if (zend_binary_strcasecmp(
+							ZSTR_VAL(fn->common.scope->name),
+							ZSTR_LEN(fn->common.scope->name),
+							ZSTR_VAL(alias->trait_method.trait_names[j]),
+							ZSTR_LEN(alias->trait_method.trait_names[j])) == 0) {
+
+							alias->trait_method.class_name = alias->trait_method.trait_names[j];
+						}
+						j++;
+					}
 				}
 
-				lcname = zend_string_tolower(alias->alias);
-				zend_add_trait_method(ce, ZSTR_VAL(alias->alias), lcname, &fn_copy, overridden);
-				zend_string_release_ex(lcname, 0);
+				if (alias->trait_method.class_name) {
+					fn_copy = *fn;
 
-				/* Record the trait from which this alias was resolved. */
-				if (!aliases[i]) {
-					aliases[i] = fn->common.scope;
-				}
-				if (!alias->trait_method.class_name) {
-					/* TODO: try to avoid this assignment (it's necessary only for reflection) */
-					alias->trait_method.class_name = zend_string_copy(fn->common.scope->name);
+					/* if it is 0, no modifieres has been changed */
+					if (alias->modifiers) {
+						fn_copy.common.fn_flags = alias->modifiers | (fn->common.fn_flags ^ (fn->common.fn_flags & ZEND_ACC_PPP_MASK));
+					}
+
+					lcname = zend_string_tolower(alias->alias);
+					zend_add_trait_method(ce, ZSTR_VAL(alias->alias), lcname, &fn_copy, overridden);
+					zend_string_release_ex(lcname, 0);
+
+					/* Record the trait from which this alias was resolved. */
+					if (!aliases[i]) {
+						aliases[i] = fn->common.scope;
+					}
 				}
 			}
 			alias_ptr++;
@@ -1533,15 +1547,28 @@ static void zend_traits_copy_functions(zend_string *fnname, zend_function *fn, z
 					&& (ZSTR_LEN(alias->trait_method.method_name) == ZSTR_LEN(fnname))
 					&& (zend_binary_strcasecmp(ZSTR_VAL(alias->trait_method.method_name), ZSTR_LEN(alias->trait_method.method_name), ZSTR_VAL(fnname), ZSTR_LEN(fnname)) == 0)) {
 
-					fn_copy.common.fn_flags = alias->modifiers | (fn->common.fn_flags ^ (fn->common.fn_flags & ZEND_ACC_PPP_MASK));
+					if (!alias->trait_method.class_name && alias->trait_method.trait_names) {
+						uint32_t j = 0;
+						while (alias->trait_method.trait_names[j]) {
+							if (zend_binary_strcasecmp(
+								ZSTR_VAL(fn->common.scope->name),
+								ZSTR_LEN(fn->common.scope->name),
+								ZSTR_VAL(alias->trait_method.trait_names[j]),
+								ZSTR_LEN(alias->trait_method.trait_names[j])) == 0) {
 
-					/** Record the trait from which this alias was resolved. */
-					if (!aliases[i]) {
-						aliases[i] = fn->common.scope;
+								alias->trait_method.class_name = alias->trait_method.trait_names[j];
+							}
+							i++;
+						}
 					}
-					if (!alias->trait_method.class_name) {
-						/* TODO: try to avoid this assignment (it's necessary only for reflection) */
-						alias->trait_method.class_name = zend_string_copy(fn->common.scope->name);
+
+					if(alias->trait_method.class_name) {
+						fn_copy.common.fn_flags = alias->modifiers | (fn->common.fn_flags ^ (fn->common.fn_flags & ZEND_ACC_PPP_MASK));
+
+						/** Record the trait from which this alias was resolved. */
+						if (!aliases[i]) {
+							aliases[i] = fn->common.scope;
+						}
 					}
 				}
 				alias_ptr++;

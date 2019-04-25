@@ -85,6 +85,7 @@ typedef struct _zend_class_name {
 typedef struct _zend_trait_method_reference {
 	zend_string *method_name;
 	zend_string *class_name;
+	zend_string **trait_names;
 } zend_trait_method_reference;
 
 typedef struct _zend_trait_precedence {

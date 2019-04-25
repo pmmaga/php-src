@@ -166,7 +166,7 @@ ZEND_API void zend_cleanup_internal_class_data(zend_class_entry *ce)
 
 static void _destroy_zend_class_traits_info(zend_class_entry *ce)
 {
-	uint32_t i;
+	uint32_t i, j;
 
 	for (i = 0; i < ce->num_traits; i++) {
 		zend_string_release_ex(ce->trait_names[i].name, 0);
@@ -183,6 +183,10 @@ static void _destroy_zend_class_traits_info(zend_class_entry *ce)
 			if (ce->trait_aliases[i]->trait_method.class_name) {
 				zend_string_release_ex(ce->trait_aliases[i]->trait_method.class_name, 0);
 			}
+			j = 0;
+			while (ce->trait_aliases[i]->trait_method.trait_names[j]) {
+				zend_string_release_ex(ce->trait_aliases[i]->trait_method.trait_names[j++], 0);
+			}
 
 			if (ce->trait_aliases[i]->alias) {
 				zend_string_release_ex(ce->trait_aliases[i]->alias, 0);
@@ -196,12 +200,14 @@ static void _destroy_zend_class_traits_info(zend_class_entry *ce)
 	}
 
 	if (ce->trait_precedences) {
-		uint32_t j;
-
 		i = 0;
 		while (ce->trait_precedences[i]) {
 			zend_string_release_ex(ce->trait_precedences[i]->trait_method.method_name, 0);
 			zend_string_release_ex(ce->trait_precedences[i]->trait_method.class_name, 0);
+			j = 0;
+			while (ce->trait_precedences[i]->trait_method.trait_names[j]) {
+				zend_string_release_ex(ce->trait_precedences[i]->trait_method.trait_names[j++], 0);
+			}
 
 			for (j = 0; j < ce->trait_precedences[i]->num_excludes; j++) {
 				zend_string_release_ex(ce->trait_precedences[i]->exclude_class_names[j], 0);
