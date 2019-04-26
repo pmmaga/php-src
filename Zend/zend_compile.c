@@ -6021,6 +6021,7 @@ static void zend_compile_method_ref(zend_ast *ast, zend_ast_list *traits_ast, ze
 
 	if (class_ast) {
 		method_ref->class_name = zend_resolve_class_name_ast(class_ast);
+		method_ref->trait_names = NULL;
 	} else {
 		method_ref->class_name = NULL;
 		method_ref->trait_names = safe_emalloc(traits_ast->children + 1, sizeof(zend_string *), 0);

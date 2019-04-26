@@ -1500,7 +1500,7 @@ static void zend_traits_copy_functions(zend_string *fnname, zend_function *fn, z
 							ZSTR_VAL(alias->trait_method.trait_names[j]),
 							ZSTR_LEN(alias->trait_method.trait_names[j])) == 0) {
 
-							alias->trait_method.class_name = alias->trait_method.trait_names[j];
+							alias->trait_method.class_name = zend_string_copy(alias->trait_method.trait_names[j]);
 						}
 						j++;
 					}
@@ -1556,13 +1556,13 @@ static void zend_traits_copy_functions(zend_string *fnname, zend_function *fn, z
 								ZSTR_VAL(alias->trait_method.trait_names[j]),
 								ZSTR_LEN(alias->trait_method.trait_names[j])) == 0) {
 
-								alias->trait_method.class_name = alias->trait_method.trait_names[j];
+								alias->trait_method.class_name = zend_string_copy(alias->trait_method.trait_names[j]);
 							}
-							i++;
+							j++;
 						}
 					}
 
-					if(alias->trait_method.class_name) {
+					if (alias->trait_method.class_name) {
 						fn_copy.common.fn_flags = alias->modifiers | (fn->common.fn_flags ^ (fn->common.fn_flags & ZEND_ACC_PPP_MASK));
 
 						/** Record the trait from which this alias was resolved. */
