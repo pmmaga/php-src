@@ -415,7 +415,7 @@ static void zend_persist_class_entry_calc(zval *zv)
 		}
 
 		if (ce->num_traits) {
-			uint32_t i;
+			uint32_t i, j;
 
 			for (i = 0; i < ce->num_traits; i++) {
 				ADD_INTERNED_STRING(ce->trait_names[i].name);
@@ -432,6 +432,14 @@ static void zend_persist_class_entry_calc(zval *zv)
 					if (ce->trait_aliases[i]->trait_method.class_name) {
 						ADD_INTERNED_STRING(ce->trait_aliases[i]->trait_method.class_name);
 					}
+					if (ce->trait_aliases[i]->trait_method.trait_names) {
+						j = 0;
+						while (ce->trait_aliases[i]->trait_method.trait_names[j]) {
+							ADD_INTERNED_STRING(ce->trait_aliases[i]->trait_method.trait_names[j]);
+							j++;
+						}
+						// ADD_SIZE(sizeof(zend_string**));
+					}
 
 					if (ce->trait_aliases[i]->alias) {
 						ADD_INTERNED_STRING(ce->trait_aliases[i]->alias);
@@ -443,12 +451,18 @@ static void zend_persist_class_entry_calc(zval *zv)
 			}
 
 			if (ce->trait_precedences) {
-				int j;
-
 				i = 0;
 				while (ce->trait_precedences[i]) {
 					ADD_INTERNED_STRING(ce->trait_precedences[i]->trait_method.method_name);
 					ADD_INTERNED_STRING(ce->trait_precedences[i]->trait_method.class_name);
+					if (ce->trait_precedences[i]->trait_method.trait_names) {
+						j = 0;
+						while (ce->trait_precedences[i]->trait_method.trait_names[j]) {
+							ADD_INTERNED_STRING(ce->trait_precedences[i]->trait_method.trait_names[j]);
+							j++;
+						}
+						// ADD_SIZE(sizeof(zend_string**));
+					}
 
 					for (j = 0; j < ce->trait_precedences[i]->num_excludes; j++) {
 						ADD_INTERNED_STRING(ce->trait_precedences[i]->exclude_class_names[j]);

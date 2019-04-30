@@ -381,6 +381,14 @@ static void zend_class_copy_ctor(zend_class_entry **pce)
 			while (ce->trait_aliases[i]) {
 				trait_aliases[i] = emalloc(sizeof(zend_trait_alias));
 				memcpy(trait_aliases[i], ce->trait_aliases[i], sizeof(zend_trait_alias));
+				// if (ce->trait_aliases[i]->trait_method.trait_names) {
+				// 	int j = 0;
+				// 	while (ce->trait_aliases[i]->trait_method.trait_names[j]) {
+				// 		j++;
+				// 	}
+				// 	trait_aliases[i]->trait_method.trait_names = safe_emalloc(j + 1, sizeof(zend_string *), 0);
+				// 	memcpy(trait_aliases[i]->trait_method.trait_names, ce->trait_aliases[i]->trait_method.trait_names, (j + 1) * sizeof(zend_string *));
+				// }
 				i++;
 			}
 			trait_aliases[i] = NULL;
@@ -399,6 +407,14 @@ static void zend_class_copy_ctor(zend_class_entry **pce)
 			while (ce->trait_precedences[i]) {
 				trait_precedences[i] = emalloc(sizeof(zend_trait_precedence) + (ce->trait_precedences[i]->num_excludes - 1) * sizeof(zend_string*));
 				memcpy(trait_precedences[i], ce->trait_precedences[i], sizeof(zend_trait_precedence) + (ce->trait_precedences[i]->num_excludes - 1) * sizeof(zend_string*));
+				// if (ce->trait_precedences[i]->trait_method.trait_names) {
+				// 	int j = 0;
+				// 	while (ce->trait_precedences[i]->trait_method.trait_names[j]) {
+				// 		j++;
+				// 	}
+				// 	trait_precedences[i]->trait_method.trait_names = safe_emalloc(j + 1, sizeof(zend_string *), 0);
+				// 	memcpy(trait_precedences[i]->trait_method.trait_names, ce->trait_precedences[i]->trait_method.trait_names, (j + 1) * sizeof(zend_string *));
+				// }
 				i++;
 			}
 			trait_precedences[i] = NULL;

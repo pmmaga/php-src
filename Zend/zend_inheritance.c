@@ -1494,12 +1494,7 @@ static void zend_traits_copy_functions(zend_string *fnname, zend_function *fn, z
 				if (!alias->trait_method.class_name && alias->trait_method.trait_names) {
 					uint32_t j = 0;
 					while (alias->trait_method.trait_names[j]) {
-						if (zend_binary_strcasecmp(
-							ZSTR_VAL(fn->common.scope->name),
-							ZSTR_LEN(fn->common.scope->name),
-							ZSTR_VAL(alias->trait_method.trait_names[j]),
-							ZSTR_LEN(alias->trait_method.trait_names[j])) == 0) {
-
+						if (zend_string_equals_ci(fn->common.scope->name, alias->trait_method.trait_names[j])) {
 							alias->trait_method.class_name = zend_string_copy(alias->trait_method.trait_names[j]);
 						}
 						j++;
@@ -1550,12 +1545,7 @@ static void zend_traits_copy_functions(zend_string *fnname, zend_function *fn, z
 					if (!alias->trait_method.class_name && alias->trait_method.trait_names) {
 						uint32_t j = 0;
 						while (alias->trait_method.trait_names[j]) {
-							if (zend_binary_strcasecmp(
-								ZSTR_VAL(fn->common.scope->name),
-								ZSTR_LEN(fn->common.scope->name),
-								ZSTR_VAL(alias->trait_method.trait_names[j]),
-								ZSTR_LEN(alias->trait_method.trait_names[j])) == 0) {
-
+							if (zend_string_equals_ci(fn->common.scope->name, alias->trait_method.trait_names[j])) {
 								alias->trait_method.class_name = zend_string_copy(alias->trait_method.trait_names[j]);
 							}
 							j++;

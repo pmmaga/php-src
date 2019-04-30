@@ -729,6 +729,25 @@ static void zend_file_cache_serialize_class(zval                     *zv,
 				if (q->trait_method.class_name) {
 					SERIALIZE_STR(q->trait_method.class_name);
 				}
+				// if (q->trait_method.trait_names) {
+				// 	zend_string **r;
+
+				// 	SERIALIZE_PTR(q->trait_method.trait_names);
+				// 	r = q->trait_method.trait_names;
+				// 	UNSERIALIZE_PTR(r);
+
+				// 	while (*r) {
+				// 		SERIALIZE_STR(*r);
+				// 		r++;
+				// 	}
+				// }
+				if (q->trait_method.trait_names) {
+					uint32_t k = 0;
+					while (q->trait_method.trait_names[k]) {
+						SERIALIZE_STR(q->trait_method.trait_names[k]);
+						k++;
+					}
+				}
 
 				if (q->alias) {
 					SERIALIZE_STR(q->alias);
@@ -755,6 +774,25 @@ static void zend_file_cache_serialize_class(zval                     *zv,
 				}
 				if (q->trait_method.class_name) {
 					SERIALIZE_STR(q->trait_method.class_name);
+				}
+				// if (q->trait_method.trait_names) {
+				// 	zend_string **r;
+
+				// 	SERIALIZE_PTR(q->trait_method.trait_names);
+				// 	r = q->trait_method.trait_names;
+				// 	UNSERIALIZE_PTR(r);
+
+				// 	while (*r) {
+				// 		SERIALIZE_STR(*r);
+				// 		r++;
+				// 	}
+				// }
+				if (q->trait_method.trait_names) {
+					uint32_t k = 0;
+					while (q->trait_method.trait_names[k]) {
+						SERIALIZE_STR(q->trait_method.trait_names[k]);
+						k++;
+					}
 				}
 
 				for (j = 0; j < q->num_excludes; j++) {
@@ -1419,6 +1457,24 @@ static void zend_file_cache_unserialize_class(zval                    *zv,
 				if (q->trait_method.class_name) {
 					UNSERIALIZE_STR(q->trait_method.class_name);
 				}
+				// if (q->trait_method.trait_names) {
+				// 	zend_string **r;
+
+				// 	UNSERIALIZE_PTR(q->trait_method.trait_names);
+				// 	r = q->trait_method.trait_names;
+
+				// 	while (*r) {
+				// 		UNSERIALIZE_STR(*r);
+				// 		r++;
+				// 	}
+				// }
+				if (q->trait_method.trait_names) {
+					uint32_t k = 0;
+					while (q->trait_method.trait_names[k]) {
+						UNSERIALIZE_STR(q->trait_method.trait_names[k]);
+						k++;
+					}
+				}
 
 				if (q->alias) {
 					UNSERIALIZE_STR(q->alias);
@@ -1443,6 +1499,24 @@ static void zend_file_cache_unserialize_class(zval                    *zv,
 				}
 				if (q->trait_method.class_name) {
 					UNSERIALIZE_STR(q->trait_method.class_name);
+				}
+				// if (q->trait_method.trait_names) {
+				// 	zend_string **r;
+
+				// 	UNSERIALIZE_PTR(q->trait_method.trait_names);
+				// 	r = q->trait_method.trait_names;
+
+				// 	while (*r) {
+				// 		UNSERIALIZE_STR(*r);
+				// 		r++;
+				// 	}
+				// }
+				if (q->trait_method.trait_names) {
+					uint32_t k = 0;
+					while (q->trait_method.trait_names[k]) {
+						UNSERIALIZE_STR(q->trait_method.trait_names[k]);
+						k++;
+					}
 				}
 
 				for (j = 0; j < q->num_excludes; j++) {
